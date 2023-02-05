@@ -2,7 +2,7 @@
 	<div class="count-paid">
 		<div class="card">
 			<div class="card__header">
-				<span class="label">支付笔数</span>
+				<span class="label">Number of payments</span>
 				<span class="value">6560</span>
 			</div>
 
@@ -11,7 +11,7 @@
 			</div>
 
 			<div class="card__footer">
-				<span class="label">转化率</span>
+				<span class="label">Conversion rate</span>
 				<span class="value">60%</span>
 			</div>
 		</div>

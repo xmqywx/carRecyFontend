@@ -2,8 +2,8 @@
 	<div class="tab-chart">
 		<div class="tab-chart__header">
 			<ul class="tab-chart__tab">
-				<li class="active">销售额</li>
-				<li>访问量</li>
+				<li class="active">Order</li>
+				<li>Cars</li>
 			</ul>
 
 			<span class="tab-chart__year">2020</span>
@@ -72,7 +72,7 @@ const chartOption = reactive<any>({
 	series: [
 		{
 			barWidth,
-			name: "付款笔数",
+			name: "Paid",
 			type: "bar",
 			data: [],
 			itemStyle: {
@@ -93,7 +93,7 @@ const chartOption = reactive<any>({
 	]
 });
 
-chartOption.xAxis.data = new Array(12).fill(1).map((e, i) => i + 1 + "月");
+chartOption.xAxis.data = new Array(12).fill(1).map((e, i) => "M " + (i + 1) );
 chartOption.series[0].data = new Array(12).fill(1).map(() => parseInt(String(Math.random() * 100)));
 chartOption.series[1].data = new Array(12).fill(100);
 </script>

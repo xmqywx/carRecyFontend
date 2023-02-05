@@ -1,10 +1,12 @@
 <template>
-	<el-config-provider :locale="zhCn">
+	<el-config-provider :locale="en">
 		<router-view />
 	</el-config-provider>
 </template>
-
 <script lang="ts" setup>
 import { ElConfigProvider } from "element-plus";
-import zhCn from "element-plus/lib/locale/lang/zh-cn";
+import en from "element-plus/lib/locale/lang/en";
 </script>
+<style>
+
+</style>

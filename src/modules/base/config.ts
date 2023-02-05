@@ -10,7 +10,7 @@ export default (): ModuleConfig => {
 			{
 				path: "/my/info",
 				meta: {
-					label: "个人中心"
+					label: "Profile"
 				},
 				component: () => import("./views/info.vue")
 			}

@@ -2,14 +2,14 @@
 	<div class="count-sales">
 		<div class="card">
 			<div class="card__header">
-				<span class="label">总销售额</span>
-				<span class="value">￥15920</span>
+				<span class="label">Total volume</span>
+				<span class="value">$15920</span>
 			</div>
 
 			<div class="card__container">
 				<ul class="count-sales__cop">
 					<li>
-						<span>周同比</span>
+						<span>Week</span>
 
 						<div class="fall">
 							<i class="el-icon-bottom-right"></i>
@@ -18,7 +18,7 @@
 					</li>
 
 					<li>
-						<span>日同比</span>
+						<span>Day</span>
 
 						<div class="rise">
 							<i class="el-icon-top-right"></i>
@@ -29,8 +29,8 @@
 			</div>
 
 			<div class="card__footer">
-				<span class="label">日销售额</span>
-				<span class="value">￥1298.01</span>
+				<span class="label">Day volume</span>
+				<span class="value">$1298.01</span>
 			</div>
 		</div>
 	</div>

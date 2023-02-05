@@ -402,7 +402,7 @@ async function httpRequest(req: any, item?: any) {
 
 			if (mode == "local") {
 				next({
-					host: "/admin/base/comm/upload"
+					host: "/admin/vehicle/profile/upload"
 				});
 			} else {
 				service.base.comm

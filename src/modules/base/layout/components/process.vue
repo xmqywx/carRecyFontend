@@ -2,12 +2,12 @@
 	<div class="app-process">
 		<div class="app-process__icon" @click="router.push('/')">
 			<el-icon size="15"><home-filled /></el-icon>
-			<span>首页</span>
+			<span>Home</span>
 		</div>
 
 		<div class="app-process__icon" @click="router.back">
 			<el-icon :size="15"><arrow-left-bold /></el-icon>
-			<span>后退</span>
+			<span>Back</span>
 		</div>
 
 		<el-scrollbar :ref="setRefs('scroller')" class="app-process__scroller">

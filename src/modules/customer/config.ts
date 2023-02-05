@@ -1,7 +1,7 @@
 import { Merge, ModuleConfig } from "/@/cool";
 import Crud from "@cool-vue/crud";
 import "@cool-vue/crud/dist/index.css";
-var en = ({
+const en = {
 	op: "Operation",
 	add: "Add",
 	delete: "Delete",
@@ -23,7 +23,7 @@ var en = ({
 	deleteSuccess: "Delete successful",
 	deleteConfirm: "Will permanently delete the data, continue?",
 	empty: "Empty Data"
-});
+};
 export default (): Merge<ModuleConfig, CrudOptions> => {
 	return {
 		options: {
@@ -31,7 +31,8 @@ export default (): Merge<ModuleConfig, CrudOptions> => {
 				sort: {
 					prop: "order",
 					order: "sort"
-				}
+				},
+				label: en
 			}
 		},
 		install: Crud.install

@@ -2,8 +2,8 @@
 	<div class="count-effect">
 		<div class="card">
 			<div class="card__header">
-				<span class="label">总销售额</span>
-				<span class="value">￥15920</span>
+				<span class="label">Count effect</span>
+				<span class="value">$15920</span>
 			</div>
 
 			<div class="card__container">
@@ -13,7 +13,7 @@
 			<div class="card__footer">
 				<ul class="count-effect__cop">
 					<li>
-						<span>周同比</span>
+						<span>Week</span>
 
 						<div class="fall">
 							<i class="el-icon-bottom-right"></i>
@@ -22,7 +22,7 @@
 					</li>
 
 					<li>
-						<span>日同比</span>
+						<span>Day</span>
 
 						<div class="rise">
 							<i class="el-icon-top-right"></i>

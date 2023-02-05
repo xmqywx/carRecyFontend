@@ -1,7 +1,7 @@
 <template>
 	<div class="hot-search">
 		<div class="hot-search__header">
-			<span>线上热门搜索</span>
+			<span>Inventory statistics</span>
 		</div>
 
 		<div class="hot-search__container">
@@ -10,8 +10,8 @@
 					<div class="block">
 						<div class="count">
 							<div class="number">
-								<span>搜索用户数</span>
-								<span>1242</span>
+								<span>Driver</span>
+								<span>33</span>
 							</div>
 							<div class="rise">
 								<i class="el-icon-top-right"></i>
@@ -27,7 +27,7 @@
 					<div class="block is-last">
 						<div class="count">
 							<div class="number">
-								<span>关注用户数</span>
+								<span>Tasks</span>
 								<span>365</span>
 							</div>
 							<div class="rise">
@@ -156,31 +156,31 @@ const Crud = useCrud(
 					list: [
 						{
 							index: 1,
-							keyWord: "无线耳机",
+							keyWord: "John",
 							users: 983,
 							ud: 5
 						},
 						{
 							index: 1,
-							keyWord: "运动耳机",
+							keyWord: "James",
 							users: 763,
 							ud: -3
 						},
 						{
 							index: 1,
-							keyWord: "蓝牙音箱",
+							keyWord: "Cendy",
 							users: 328,
 							ud: 7
 						},
 						{
 							index: 1,
-							keyWord: "4k显示屏",
+							keyWord: "Cris",
 							users: 144,
 							ud: 4
 						},
 						{
 							index: 1,
-							keyWord: "罗技 G530",
+							keyWord: "David",
 							users: 121,
 							ud: -1
 						}
@@ -199,26 +199,21 @@ const Table = useTable({
 	contextMenu: false,
 	columns: [
 		{
-			label: "排名",
+			label: "Rank",
 			type: "index",
-			width: 60
+			width: 80
 		},
 		{
-			label: "搜索关键词",
+			label: "Driver",
 			prop: "keyWord",
 			minWidth: 100
 		},
 		{
-			label: "用户数",
+			label: "Tasks",
 			prop: "users",
 			minWidth: 100
 		},
-		{
-			label: "周涨幅",
-			prop: "ud",
-			sortable: "desc",
-			minWidth: 100
-		}
+
 	]
 });
 </script>

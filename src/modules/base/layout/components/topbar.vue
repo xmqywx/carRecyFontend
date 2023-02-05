@@ -19,9 +19,9 @@
 
 		<!-- 工具栏 -->
 		<ul class="app-topbar__tools">
-			<li>
-				<cl-chat />
-			</li>
+<!--			<li>-->
+<!--				<select></select>-->
+<!--			</li>-->
 
 			<li>
 				<cl-theme />
@@ -40,11 +40,11 @@
 					<el-dropdown-menu>
 						<el-dropdown-item command="my">
 							<i class="cl-iconfont cl-icon-user"></i>
-							<span>个人中心</span>
+							<span>Profile</span>
 						</el-dropdown-item>
 						<el-dropdown-item command="exit">
 							<i class="cl-iconfont cl-icon-exit"></i>
-							<span>退出</span>
+							<span>Logout</span>
 						</el-dropdown-item>
 					</el-dropdown-menu>
 				</template>

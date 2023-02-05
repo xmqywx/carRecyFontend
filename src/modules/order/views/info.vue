@@ -3,11 +3,12 @@
 		<el-row>
 			<!-- 刷新按钮 -->
 			<cl-refresh-btn />
+			<el-button @click="getInfo()">test</el-button>
 			<!-- 新增按钮 -->
-			<el-button type="primary" @click="visibleOrder = true">Add</el-button>
+			<!--			<el-button type="primary" @click="visibleOrder = true">Add</el-button>-->
 
 			<!-- 删除按钮 -->
-			<cl-multi-delete-btn />
+			<!--			<cl-multi-delete-btn />-->
 
 			<cl-flex1 />
 			<!-- 关键字搜索 -->
@@ -48,11 +49,7 @@
 						</el-descriptions>
 					</div>
 				</template>
-				<template #slot-order="{ scope }">
-					<el-button type="success" text bg @click="open(scope.row)">Order</el-button>
-				</template>
 			</cl-table>
-			<cl-form ref="Form"></cl-form>
 		</el-row>
 
 		<el-row>
@@ -67,30 +64,28 @@
 	<!--	<cl-dialog title="Assign Driver" v-model="visible" :before-close="beforeClose">-->
 	<!--		<form-user @choose="chooseUser" ref="userPopup" />-->
 	<!--	</cl-dialog>-->
-	<cl-dialog title="New lead" width="80%" v-model="visibleOrder">
-		<form-car @addedLead="addedLead" :id="orderID" />
+	<cl-dialog title="Create Order" width="70%" v-model="visibleOrder">
+		<form-car :id="orderID" />
 	</cl-dialog>
-	<cl-dialog title="Actions" width="80%" v-model="visibleAction">
+	<cl-dialog title="Create Order" width="80%" v-model="visibleAction">
 		<order-action :id="orderID" />
 	</cl-dialog>
 </template>
 
 <script lang="ts" name="order-info" setup>
-import { useCrud, useForm, useTable } from "@cool-vue/crud";
-import { storage, useCool } from "/@/cool";
+import { useCrud, useTable } from "@cool-vue/crud";
+import { useCool } from "/@/cool";
 import FormCar from "../components/form-car.vue";
 import OrderAction from "../components/order-action.vue";
 const { service } = useCool();
 import { ref } from "vue";
 import dayjs from "dayjs";
-import OrderInfoEntity = Eps.OrderInfoEntity;
-import { ElMessage } from "element-plus";
-// let selectedOrder: any = {};
-// const visible = ref<boolean>(false);
+let selectedOrder: any = {};
+const visible = ref<boolean>(false);
 const visibleAction = ref<boolean>(false);
 const visibleOrder = ref<boolean>(false);
 const orderID = ref(null);
-const Form = useForm();
+
 const ORDER_STATUS = {
 	[0]: "Unpaid",
 	[1]: "Paid",
@@ -111,7 +106,7 @@ const Table = useTable({
 				return row.firstName + " " + row.surname;
 			}
 		},
-		// { label: "Status", prop: "status" },
+		{ label: "Status", prop: "status" },
 		{
 			label: "Quoted Price",
 			prop: "recommendedPrice",
@@ -119,13 +114,15 @@ const Table = useTable({
 				return row.recommendedPrice ? "$" + Number(row.recommendedPrice).toFixed(2) : "";
 			}
 		},
-		// {
-		// 	label: "Payment Price",
-		// 	prop: "actualPaymentPrice",
-		// 	formatter: (row) => {
-		// 		return row.actualPaymentPrice ? "$" + Number(row.actualPaymentPrice).toFixed(2) : "";
-		// 	}
-		// },
+		{
+			label: "Payment Price",
+			prop: "actualPaymentPrice",
+			formatter: (row) => {
+				return row.actualPaymentPrice
+					? "$" + Number(row.actualPaymentPrice).toFixed(2)
+					: "";
+			}
+		},
 		{
 			label: "Create Time",
 			prop: "createTime",
@@ -139,85 +136,43 @@ const Table = useTable({
 			type: "op",
 			width: 250,
 			buttons: [
-				"edit",
 				{
 					label: "Action",
 					icon: "Message",
 					onClick(options: { scope: obj }) {
-						// selectedOrder = options.scope.row;
+						selectedOrder = options.scope.row;
 						orderID.value = options.scope.row.id;
 						visibleAction.value = true;
 					}
 				},
-				"slot-order"
+				{
+					label: "Invoice",
+					icon: "Message",
+					onClick(options: { scope: obj }) {
+						alert("Sending...");
+					}
+				}
 			]
 		}
 	]
 });
-
-function open(row: any) {
-	Form.value?.open({
-		title: "Add pickup address",
-		width: "600px",
-		items: [
-			{
-				label: "Address",
-				prop: "pickupAddress",
-				required: true,
-				component: {
-					name: "el-input",
-					props: {
-						placeholder: "Please input address"
-					}
-				}
-			}
-		],
-		on: {
-			submit(data, { close, done }) {
-				service.order.info
-					.update({
-						id: row.id,
-						pickupAddress: data.pickupAddress
-					})
-					.then(() => {
-						transOrder(row);
-						close();
-					})
-					.catch((err) => {
-						console.error(err);
-						ElMessage.error("Add pickup address failed");
-						done();
-					});
-			}
-		}
-	});
+function beforeClose(done: any) {
+	done();
 }
-function transOrder(row: OrderInfoEntity) {
+function chooseUser(user: obj) {
 	service.order.info
 		.update({
-			id: row.id,
-			status: 1
+			id: selectedOrder.id,
+			driverID: user.id
 		})
-		.then(async () => {
-			await service.order.action.add({
-				authorID: storage.get("userInfo").id,
-				orderID: row.id,
-				timestamp: +new Date(),
-				description: "Generated order",
-				type: 0
-			});
-
-			await service.job.info.add({
-				orderID: row.id,
-				carID: row.carID,
-				status: 0
-			});
+		.then(() => {
 			Crud.value?.refresh();
+			visible.value = false;
 		});
 }
-function addedLead() {
-	visibleOrder.value = false;
-	Crud.value?.refresh();
+
+function getInfo() {
+	service.order.info.getCarInfo().then(() => {});
 }
 // cl-crud 配置
 const Crud = useCrud(
@@ -226,7 +181,8 @@ const Crud = useCrud(
 	},
 	(app) => {
 		app.refresh({
-			status: 0
+			status: 1,
+			sortBy: "updateTime"
 		});
 	}
 );

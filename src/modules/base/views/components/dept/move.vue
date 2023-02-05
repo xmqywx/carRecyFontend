@@ -21,14 +21,14 @@ const Crud = useCrud();
 // 打开
 async function open(ids: any[]) {
 	Form.value?.open({
-		title: "部门转移",
+		title: "Move yard",
 		width: "600px",
 		props: {
 			labelWidth: "80px"
 		},
 		items: [
 			{
-				label: "选择部门",
+				label: "Yard",
 				prop: "departmentId",
 				component: {
 					vm: DeptSelect
@@ -38,11 +38,11 @@ async function open(ids: any[]) {
 		on: {
 			submit(data, { done, close }) {
 				if (!data.departmentId) {
-					ElMessage.warning("请选择部门");
+					ElMessage.warning("Please choose yard");
 					return done();
 				}
 
-				ElMessageBox.confirm("是否转移部门？", "提示", {
+				ElMessageBox.confirm("Do you want move to this yard?", "Warning", {
 					type: "warning"
 				})
 					.then(() => {
@@ -52,7 +52,7 @@ async function open(ids: any[]) {
 								userIds: ids
 							})
 							.then(() => {
-								ElMessage.success("转移成功");
+								ElMessage.success("Move success");
 								Crud.value?.refresh();
 								close();
 							})

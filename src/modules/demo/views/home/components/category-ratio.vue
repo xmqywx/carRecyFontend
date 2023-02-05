@@ -1,7 +1,7 @@
 <template>
 	<div class="category-ratio">
 		<div class="category-ratio__header">
-			<span>销售额类别占比</span>
+			<span>Proportion of categories</span>
 		</div>
 
 		<div class="category-ratio__container">
@@ -21,12 +21,12 @@ const chartOption = reactive({
 	legend: {
 		bottom: 30,
 		left: "center",
-		data: ["手机", "相机", "耳机", "音箱", "手表"]
+		data: ["Body", "Engine", "Catelytic Converter"]
 	},
-	color: ["#3AA1FF", "#36CBCB", "#F2637B", "#975FE5", "#FBD437"],
+	color: ["#3AA1FF", "#36CBCB", "#F2637B"],
 	series: [
 		{
-			name: "访问来源",
+			name: "Origin",
 			type: "pie",
 			radius: ["50%", "60%"],
 			center: ["50%", "40%"],
@@ -46,11 +46,9 @@ const chartOption = reactive({
 				show: false
 			},
 			data: [
-				{ value: 335, name: "手机" },
-				{ value: 310, name: "相机" },
-				{ value: 234, name: "耳机" },
-				{ value: 135, name: "音箱" },
-				{ value: 500, name: "手表" }
+				{ value: 335, name: "Body" },
+				{ value: 310, name: "Engine" },
+				{ value: 234, name: "Catelytic Converter" }
 			],
 			itemStyle: {
 				borderColor: "#fff",

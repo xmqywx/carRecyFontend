@@ -15,7 +15,7 @@
 						type="success"
 						:disabled="selects.ids.length == 0"
 						@click="toMove()"
-						>转移</el-button
+						>Move</el-button
 					>
 					<cl-flex1 />
 					<cl-search-key />
@@ -52,7 +52,7 @@
 								text
 								bg
 								@click="toMove(scope.row)"
-								>转移</el-button
+								>Move</el-button
 							>
 						</template>
 					</cl-table>
@@ -79,6 +79,7 @@ import { computed, reactive } from "vue";
 import { useCool } from "/@/cool";
 import DeptMove from "./components/dept/move.vue";
 import DeptTree from "./components/dept/tree.vue";
+import dayjs from "dayjs";
 
 const { service, refs, setRefs } = useCool();
 
@@ -90,7 +91,7 @@ const selects = reactive<any>({
 
 // 标题
 const title = computed(() => {
-	return `成员列表（${selects.dept?.name || ""}）`;
+	return `User list（${selects.dept?.name || ""}）`;
 });
 
 // cl-crud 配置
@@ -107,40 +108,40 @@ const Table = useTable({
 		},
 		{
 			prop: "headImg",
-			label: "头像",
+			label: "Image",
 			component: {
 				name: "cl-avatar"
 			}
 		},
-		{
-			prop: "name",
-			label: "姓名",
-			minWidth: 150
-		},
+		// {
+		// 	prop: "name",
+		// 	label: "姓名",
+		// 	minWidth: 150
+		// },
 		{
 			prop: "username",
-			label: "用户名",
+			label: "Name",
 			minWidth: 150
 		},
-		{
-			prop: "nickName",
-			label: "昵称",
-			minWidth: 150
-		},
-		{
-			prop: "departmentName",
-			label: "部门名称",
-			minWidth: 150
-		},
+		// {
+		// 	prop: "nickName",
+		// 	label: "昵称",
+		// 	minWidth: 150
+		// },
+		// {
+		// 	prop: "departmentName",
+		// 	label: "部门名称",
+		// 	minWidth: 150
+		// },
 		{
 			prop: "roleName",
-			label: "角色",
+			label: "Role",
 			headerAlign: "center",
 			minWidth: 120
 		},
 		{
 			prop: "status",
-			label: "状态",
+			label: "Status",
 			minWidth: 120,
 			component: {
 				name: "cl-switch"
@@ -148,17 +149,20 @@ const Table = useTable({
 		},
 		{
 			prop: "phone",
-			label: "手机号码",
+			label: "Phone",
 			minWidth: 150
 		},
 		{
 			prop: "remark",
-			label: "备注",
+			label: "Remark",
 			minWidth: 150
 		},
 		{
 			prop: "createTime",
-			label: "创建时间",
+			label: "Create Time",
+			formatter: (row) => {
+				return dayjs(row.createTime).format("DD-MM-YYYY HH:mm");
+			},
 			sortable: "custom",
 			minWidth: 160
 		},
@@ -177,53 +181,55 @@ const Upsert = useUpsert({
 	},
 
 	items: [
-		{
-			prop: "headImg",
-			label: "头像",
-			component: {
-				name: "cl-upload",
-				props: {
-					text: "选择头像"
-				}
-			}
-		},
-		{
-			prop: "name",
-			label: "姓名",
-			span: 12,
-			required: true,
-			component: {
-				name: "el-input"
-			}
-		},
-		{
-			prop: "nickName",
-			label: "昵称",
-			required: true,
-			span: 12,
-			component: {
-				name: "el-input"
-			}
-		},
+		// {
+		// 	prop: "headImg",
+		// 	label: "头像",
+		// 	component: {
+		// 		name: "cl-upload",
+		// 		props: {
+		// 			text: "选择头像"
+		// 		}
+		// 	}
+		// },
+		// {
+		// 	prop: "name",
+		// 	label: "Name",
+		// 	span: 12,
+		// 	required: true,
+		// 	component: {
+		// 		name: "el-input"
+		// 	}
+		// },
+		// {
+		// 	prop: "nickName",
+		// 	label: "昵称",
+		// 	required: true,
+		// 	span: 12,
+		// 	component: {
+		// 		name: "el-input"
+		// 	}
+		// },
 		{
 			prop: "username",
-			label: "用户名",
+			label: "User name",
 			required: true,
 			span: 12,
 			component: {
-				name: "el-input"
+				name: "el-input",
+				placeholder: "Please input user name"
 			}
 		},
 		() => {
 			return {
 				prop: "password",
-				label: "密码",
+				label: "Password",
 				span: 12,
 				required: Upsert.value?.mode == "add",
 				component: {
 					name: "el-input",
 					props: {
-						type: "password"
+						type: "password",
+						placeholder: "Please input password"
 					}
 				},
 				rules: [
@@ -237,7 +243,7 @@ const Upsert = useUpsert({
 		},
 		{
 			prop: "roleIdList",
-			label: "角色",
+			label: "Role",
 			value: [],
 			required: true,
 			component: {
@@ -245,50 +251,58 @@ const Upsert = useUpsert({
 				options: [],
 				props: {
 					multiple: true,
+					placeholder: "Please choose role",
 					"multiple-limit": 3
 				}
 			}
 		},
 		{
 			prop: "phone",
-			label: "手机号码",
+			label: "Phone",
 			span: 12,
 			component: {
-				name: "el-input"
+				name: "el-input",
+				props: {
+					placeholder: "Please input phone number"
+				}
 			}
 		},
 		{
 			prop: "email",
-			label: "邮箱",
+			label: "Email",
 			span: 12,
 			component: {
-				name: "el-input"
+				name: "el-input",
+				props: {
+					placeholder: "Please input email"
+				}
 			}
 		},
 		{
 			prop: "remark",
-			label: "备注",
+			label: "Remark",
 			component: {
 				name: "el-input",
 				props: {
 					type: "textarea",
+					placeholder: "Please input remark",
 					rows: 4
 				}
 			}
 		},
 		{
 			prop: "status",
-			label: "状态",
+			label: "Status",
 			value: 1,
 			component: {
 				name: "el-radio-group",
 				options: [
 					{
-						label: "开启",
+						label: "Active",
 						value: 1
 					},
 					{
-						label: "关闭",
+						label: "Inactive",
 						value: 0
 					}
 				]

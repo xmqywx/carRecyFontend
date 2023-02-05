@@ -1,11 +1,11 @@
 <template>
 	<div class="dept-tree">
 		<div class="dept-tree__header">
-			<div>组织架构</div>
+			<div>Yards List</div>
 
 			<ul class="dept-tree__op">
 				<li @click="refresh()">
-					<el-tooltip content="刷新">
+					<el-tooltip content="Refresh">
 						<el-icon>
 							<refresh-icon />
 						</el-icon>
@@ -13,7 +13,7 @@
 				</li>
 
 				<li v-if="drag && !app.browser.isMini" @click="isDrag = true">
-					<el-tooltip content="拖动排序">
+					<el-tooltip content="Drag move">
 						<el-icon>
 							<operation />
 						</el-icon>
@@ -21,8 +21,8 @@
 				</li>
 
 				<li v-show="isDrag" class="no">
-					<el-button @click="treeOrder(true)" size="small">保存</el-button>
-					<el-button @click="treeOrder(false)" size="small">取消</el-button>
+					<el-button @click="treeOrder(true)" size="small">Save</el-button>
+					<el-button @click="treeOrder(false)" size="small">Cancel</el-button>
 				</li>
 			</ul>
 		</div>
@@ -161,14 +161,14 @@ function rowEdit(e: any) {
 	const method = e.id ? "update" : "add";
 
 	Form.value?.open({
-		title: "编辑部门",
+		title: "Edit yard",
 		width: "550px",
 		props: {
 			labelWidth: "100px"
 		},
 		items: [
 			{
-				label: "部门名称",
+				label: "Yard name",
 				prop: "name",
 				component: {
 					name: "el-input"
@@ -176,7 +176,7 @@ function rowEdit(e: any) {
 				required: true
 			},
 			{
-				label: "上级部门",
+				label: "Parent Name",
 				prop: "parentName",
 				component: {
 					name: "el-input",
@@ -186,7 +186,7 @@ function rowEdit(e: any) {
 				}
 			},
 			{
-				label: "排序",
+				label: "Sort",
 				prop: "orderNum",
 				component: {
 					name: "el-input-number",
@@ -208,7 +208,7 @@ function rowEdit(e: any) {
 					orderNum: data.orderNum
 				})
 					.then(() => {
-						ElMessage.success(`新增部门 “${data.name}” 成功`);
+						ElMessage.success(`Created “${data.name}” success`);
 						close();
 						refresh();
 					})
@@ -235,10 +235,10 @@ function rowDel(e: any) {
 				}
 
 				if (f) {
-					ElMessage.success("删除成功");
+					ElMessage.success("Delete succsess");
 				} else {
 					ElMessageBox.confirm(
-						`“${e.name}” 部门的用户已成功转移到 “${e.parentName}” 部门。`,
+						`"All user which from ${e.name}" department have moved to "${e.parentName}" department`,
 						"删除成功"
 					);
 				}
@@ -247,12 +247,16 @@ function rowDel(e: any) {
 		refresh();
 	}
 
-	ElMessageBox.confirm(`该操作会删除 “${e.name}” 部门的所有用户，是否确认？`, "提示", {
-		type: "warning",
-		confirmButtonText: "直接删除",
-		cancelButtonText: "保留用户",
-		distinguishCancelAndClose: true
-	})
+	ElMessageBox.confirm(
+		`This operation will delete all users of "${e.name}" department. Are you sure?`,
+		"Warning",
+		{
+			type: "warning",
+			confirmButtonText: "Delete directly",
+			cancelButtonText: "Keep users",
+			distinguishCancelAndClose: true
+		}
+	)
 		.then(() => {
 			del(true);
 		})
@@ -266,9 +270,13 @@ function rowDel(e: any) {
 // 部门排序
 function treeOrder(f: boolean) {
 	if (f) {
-		ElMessageBox.confirm("部门架构已发生改变，是否保存？", "提示", {
-			type: "warning"
-		})
+		ElMessageBox.confirm(
+			"The department structure has changed. Do you want to save it?",
+			"Info",
+			{
+				type: "warning"
+			}
+		)
 			.then(async () => {
 				const ids: any[] = [];
 
@@ -296,7 +304,7 @@ function treeOrder(f: boolean) {
 						})
 					)
 					.then(() => {
-						ElMessage.success("更新排序成功");
+						ElMessage.success("Update sort success.");
 					})
 					.catch((err) => {
 						ElMessage.error(err.message);
@@ -323,7 +331,7 @@ function onContextMenu(e: any, d?: any, n?: any) {
 	ContextMenu.open(e, {
 		list: [
 			{
-				label: "新增",
+				label: "Add",
 				hidden: (n && n.level >= props.level) || !checkPerm(perm.add),
 				callback(done) {
 					rowEdit({
@@ -335,7 +343,7 @@ function onContextMenu(e: any, d?: any, n?: any) {
 				}
 			},
 			{
-				label: "编辑",
+				label: "Edit",
 				hidden: !checkPerm(perm.update),
 				callback(done) {
 					rowEdit(d);
@@ -343,7 +351,7 @@ function onContextMenu(e: any, d?: any, n?: any) {
 				}
 			},
 			{
-				label: "删除",
+				label: "Delete",
 				hidden: !d.parentId || !checkPerm(perm.delete),
 				callback(done) {
 					rowDel(d);
@@ -351,7 +359,7 @@ function onContextMenu(e: any, d?: any, n?: any) {
 				}
 			},
 			{
-				label: "新增成员",
+				label: "Add user",
 				hidden: !checkPerm(perm.add),
 				callback(done) {
 					emit("user-add", d);

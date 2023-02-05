@@ -1372,6 +1372,164 @@
   resolved "https://registry.npmjs.org/@socket.io/component-emitter/-/component-emitter-3.1.0.tgz#96116f2a912e0c02817345b3c10751069920d553"
   integrity sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==
 
+"@syncfusion/ej2-base@~20.4.42":
+  version "20.4.42"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-base/-/ej2-base-20.4.42.tgz#186cc40816534573ad046822e627b078130ab231"
+  integrity sha512-oJjcZoeBBvEeIstvqDcfsYY7kChpbvSA+tvPMF9aiF/YBHRPUT6WM2Eo8sampp7ZZqtoBdY51O7T+mhFxbEdoA==
+  dependencies:
+    "@syncfusion/ej2-icons" "~20.4.42"
+
+"@syncfusion/ej2-buttons@~20.4.42":
+  version "20.4.42"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-buttons/-/ej2-buttons-20.4.42.tgz#e5b71f3d23b603605ba6c25e79834bb0fc56a30e"
+  integrity sha512-nve1epbrPPFJuyEtsXRbbK6YO7xFkmkN+9tTGYwB9OmATUwrzFZXXUymK235MJy052sntCln/8DhhoIrXQ0lgg==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.42"
+
+"@syncfusion/ej2-calendars@~20.4.42":
+  version "20.4.42"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-calendars/-/ej2-calendars-20.4.42.tgz#365aa81ff4547f257a08d3dd9c191fbf7edcfc94"
+  integrity sha512-aBOLiZc1dEGJMxKVTKhDkoZfJVY4Hf2/S0fnY9iOBW7AOQw5GWTDLw3bKlGIpXRkdgsVRG890GtQ48O5GpnAGQ==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.42"
+    "@syncfusion/ej2-buttons" "~20.4.42"
+    "@syncfusion/ej2-inputs" "~20.4.42"
+    "@syncfusion/ej2-lists" "~20.4.42"
+    "@syncfusion/ej2-popups" "~20.4.42"
+
+"@syncfusion/ej2-compression@~20.4.42":
+  version "20.4.42"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-compression/-/ej2-compression-20.4.42.tgz#a1eb4328626f7709f51f5653e4df292669292f69"
+  integrity sha512-x0W1QntLzYuk+uoSh+Z9uHmCiAQaD+gyIvQ9gGjSEBJzagUkfvYQE0OzO09k9+pUAltkSwHqwaYnp64fNRxdxQ==
+  dependencies:
+    "@syncfusion/ej2-file-utils" "~20.4.42"
+
+"@syncfusion/ej2-data@~20.4.42":
+  version "20.4.42"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-data/-/ej2-data-20.4.42.tgz#93464d72553953a02b6e636b8989f95726421d41"
+  integrity sha512-pQR1INvOGiV70KHuFLUsmH7NA186I2BcG6nAYH77I22BjE8SZrTihz1cPM/e5KmZ6zXy44PpC4gMQuS7O7kNlw==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.42"
+
+"@syncfusion/ej2-dropdowns@~20.4.43":
+  version "20.4.43"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-dropdowns/-/ej2-dropdowns-20.4.43.tgz#a54ba2011ccde73b6dd3ad372dc3d516efe35ccc"
+  integrity sha512-mjvcZwKLPNxafYaf8LzRZNBW0wHf7yELjU51/F/FrxlZRZAFt3C/xoUSHhsJLm0yKTHijAxiZBgG7WZpoEdJvQ==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.42"
+    "@syncfusion/ej2-data" "~20.4.42"
+    "@syncfusion/ej2-inputs" "~20.4.42"
+    "@syncfusion/ej2-lists" "~20.4.42"
+    "@syncfusion/ej2-navigations" "~20.4.43"
+    "@syncfusion/ej2-popups" "~20.4.43"
+
+"@syncfusion/ej2-excel-export@~20.4.42":
+  version "20.4.42"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-excel-export/-/ej2-excel-export-20.4.42.tgz#975d2e9a8ebad344220405a528cbef248c6407b4"
+  integrity sha512-bt8bnhdrDqSHSLnT2bkk4ZwVUDdKjHjBvLRhuOJQH3vW+CHAPPvVLIsUyabb3pcvollJB0k3H5/VF8atEDRONA==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.42"
+    "@syncfusion/ej2-compression" "~20.4.42"
+
+"@syncfusion/ej2-file-utils@~20.4.42":
+  version "20.4.42"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-file-utils/-/ej2-file-utils-20.4.42.tgz#d19c26ea046c7529dbdc604f0eea70852b4b8154"
+  integrity sha512-VDuPSIQdZdVsCfw/f+TdR9x7hVPRx8kc9o/FwskiNHzAeYJU+Zg+yWUwW1pss0AZi34JVSFVqOWiUQ8P651UIw==
+
+"@syncfusion/ej2-icons@~20.4.42":
+  version "20.4.42"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-icons/-/ej2-icons-20.4.42.tgz#7f34a5ad40a632e0855f756b577c07e7a4dcfc06"
+  integrity sha512-HayCuxMExNg9Pp1E3qi6u4jQP6QbvLZjahokubV8IhlbC1tsaRPZQ6Mr9Tt+6eXzglCoFP4L86temkfAAw5ooA==
+
+"@syncfusion/ej2-inputs@~20.4.42":
+  version "20.4.42"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-inputs/-/ej2-inputs-20.4.42.tgz#c2aa92dc34e340b467fa04f5503f4f812db9f396"
+  integrity sha512-u8oaaf/iQllPhTb0dBTIr2M4rKFTG3Ss10HWIXuWguZPQX2StE8aCUXUfHCP6QqkspnMbcydlVjDwzCnL8pylg==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.42"
+    "@syncfusion/ej2-buttons" "~20.4.42"
+    "@syncfusion/ej2-popups" "~20.4.42"
+    "@syncfusion/ej2-splitbuttons" "~20.4.42"
+
+"@syncfusion/ej2-lists@~20.4.42":
+  version "20.4.42"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-lists/-/ej2-lists-20.4.42.tgz#f7ae9339693bc0bf4f05c7282468b26bf5d771aa"
+  integrity sha512-QjKXM8/WjL5v2u9dN3ofQ5TwI5fnyqFFl96UYdoGX2Vc/iN5YrOqn0i8AyNnBVc5dPTxz66PnnGg2KIhWpHHDQ==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.42"
+    "@syncfusion/ej2-buttons" "~20.4.42"
+    "@syncfusion/ej2-data" "~20.4.42"
+
+"@syncfusion/ej2-navigations@20.4.43", "@syncfusion/ej2-navigations@~20.4.43":
+  version "20.4.43"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-navigations/-/ej2-navigations-20.4.43.tgz#5b10ce660d59d8cdaa2bc2d8660dbf09dfd03c5f"
+  integrity sha512-NRssvlepOQ6A6KDidxQ01nmbBOkB5DHxoLmk3N06s+tuBcHdaEj0DXFn5HDmhkQTyu1PAWTqLprg7i9h1539Og==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.42"
+    "@syncfusion/ej2-buttons" "~20.4.42"
+    "@syncfusion/ej2-data" "~20.4.42"
+    "@syncfusion/ej2-inputs" "~20.4.42"
+    "@syncfusion/ej2-lists" "~20.4.42"
+    "@syncfusion/ej2-popups" "~20.4.43"
+
+"@syncfusion/ej2-popups@~20.4.42", "@syncfusion/ej2-popups@~20.4.43":
+  version "20.4.43"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-popups/-/ej2-popups-20.4.43.tgz#4b1cf0e65090bdc104eaed8e7088bef5028d1416"
+  integrity sha512-dzxiUq1s2qQmQ41t9lTG/2TgukzSr7NtnO/vbEPQOziW7RJuKjf9IoFrQRILKU5sElNPD67J5XVX5CVoOMzCDA==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.42"
+    "@syncfusion/ej2-buttons" "~20.4.42"
+
+"@syncfusion/ej2-schedule@20.4.43":
+  version "20.4.43"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-schedule/-/ej2-schedule-20.4.43.tgz#370d34c1336c8b34025160becf101696e93aaca4"
+  integrity sha512-0LLLCSqDyn6rqPTi6fFUVc1w2G01eCpdmae0PrpGBD4tfwwspzN3wySQNyKiwigAUcpHSmMhrAiFVOutSS57Pw==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.42"
+    "@syncfusion/ej2-buttons" "~20.4.42"
+    "@syncfusion/ej2-calendars" "~20.4.42"
+    "@syncfusion/ej2-data" "~20.4.42"
+    "@syncfusion/ej2-dropdowns" "~20.4.43"
+    "@syncfusion/ej2-excel-export" "~20.4.42"
+    "@syncfusion/ej2-inputs" "~20.4.42"
+    "@syncfusion/ej2-lists" "~20.4.42"
+    "@syncfusion/ej2-navigations" "~20.4.43"
+    "@syncfusion/ej2-popups" "~20.4.43"
+
+"@syncfusion/ej2-splitbuttons@~20.4.42":
+  version "20.4.42"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-splitbuttons/-/ej2-splitbuttons-20.4.42.tgz#f35281d5589f70afe3e6c76b0b23625750414e19"
+  integrity sha512-TRtlqECcZO+kCIL5QqpzYoy20Z0VGHCwsG7kpcwnBYDkrI+ebR5kkgQAbcVNE49d7acxwBYTfiUDTOHHx7nrtA==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.42"
+    "@syncfusion/ej2-popups" "~20.4.42"
+
+"@syncfusion/ej2-vue-base@~20.4.42":
+  version "20.4.42"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-vue-base/-/ej2-vue-base-20.4.42.tgz#bd4de242437620c6e4ff4f7ee0057278740c7c95"
+  integrity sha512-H5P62zZmscXXpHWXv3TWM8+J9JgAYH2qD2dtybtmf0uCeYnyziP8wRvkcvEsTJYoad21YxLBDkVxl/zLgztcTA==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.42"
+    glob "^7.0.5"
+
+"@syncfusion/ej2-vue-navigations@^20.4.43":
+  version "20.4.43"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-vue-navigations/-/ej2-vue-navigations-20.4.43.tgz#8504fa76cba6aea6c49432ee58dd30de491622f1"
+  integrity sha512-AABSN8uYFKj7vrVcfu2L5sK6WdZv66EtDlrWNUrmyA5g5T3qCDIko+5c7Ve6BghTB3c8BBur3f3meD2ieAVFOQ==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.42"
+    "@syncfusion/ej2-navigations" "20.4.43"
+    "@syncfusion/ej2-vue-base" "~20.4.42"
+
+"@syncfusion/ej2-vue-schedule@^20.4.43":
+  version "20.4.43"
+  resolved "https://registry.npmmirror.com/@syncfusion/ej2-vue-schedule/-/ej2-vue-schedule-20.4.43.tgz#23561b0c70f53b788aaddd739f3da31b121949e2"
+  integrity sha512-/RJotrA7cDRM2ElEOsyPOmxXgVd58VQwd8Xvo8ItYMx1lSXbzoW1zjtZMZHb/kjWNPUozXVCE/Z8USbRzQGkVA==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.42"
+    "@syncfusion/ej2-schedule" "20.4.43"
+    "@syncfusion/ej2-vue-base" "~20.4.42"
+
 "@transloadit/prettier-bytes@0.0.7":
   version "0.0.7"
   resolved "https://registry.npmjs.org/@transloadit/prettier-bytes/-/prettier-bytes-0.0.7.tgz#cdb5399f445fdd606ed833872fa0cabdbc51686b"
@@ -3306,7 +3464,7 @@ glob-to-regexp@^0.4.1:
   resolved "https://registry.npmjs.org/glob-to-regexp/-/glob-to-regexp-0.4.1.tgz#c75297087c851b9a578bd217dd59a92f59fe546e"
   integrity sha512-lkX1HJXwyMcprw/5YUZc2s7DrpAiHB21/V+E1rHUrVNokkvB6bqMzT0VfV6/86ZNabt1k14YOIaT7nDvOX3Iiw==
 
-glob@^7.1.3, glob@^7.1.6:
+glob@^7.0.5, glob@^7.1.3, glob@^7.1.6:
   version "7.2.3"
   resolved "https://registry.npmjs.org/glob/-/glob-7.2.3.tgz#b8df0fb802bbfa8e89bd1d938b4e16578ed44f2b"
   integrity sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==
@@ -5037,6 +5195,11 @@ vite@^4.0.3:
     rollup "^3.7.0"
   optionalDependencies:
     fsevents "~2.3.2"
+
+vue-class-component@^8.0.0-rc.1:
+  version "8.0.0-rc.1"
+  resolved "https://registry.npmmirror.com/vue-class-component/-/vue-class-component-8.0.0-rc.1.tgz#db692cd97656eb9a08206c03d0b7398cdb1d9420"
+  integrity sha512-w1nMzsT/UdbDAXKqhwTmSoyuJzUXKrxLE77PCFVuC6syr8acdFDAq116xgvZh9UCuV0h+rlCtxXolr3Hi3HyPQ==
 
 vue-codemirror@^6.1.1:
   version "6.1.1"

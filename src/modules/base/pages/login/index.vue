@@ -5,33 +5,33 @@
 				<img src="/logo.png" alt="Logo" />
 				<span>{{ app.info.name }}</span>
 			</div>
-			<p class="desc">一款快速开发后台权限管理系统</p>
+			<p class="desc">Waste car recycling management system</p>
 
 			<el-form label-position="top" class="form" :disabled="saving" size="large">
-				<el-form-item label="用户名">
+				<el-form-item label="User name">
 					<input
 						v-model="form.username"
-						placeholder="请输入用户名"
+						placeholder="Please input user name"
 						maxlength="20"
 						autocomplete="on"
 					/>
 				</el-form-item>
 
-				<el-form-item label="密码">
+				<el-form-item label="Password">
 					<input
 						v-model="form.password"
 						type="password"
-						placeholder="请输入密码"
+						placeholder="Please input password"
 						maxlength="20"
 						autocomplete="off"
 					/>
 				</el-form-item>
 
-				<el-form-item label="验证码">
+				<el-form-item label="Verification Code">
 					<div class="row">
 						<input
 							v-model="form.verifyCode"
-							placeholder="图片验证码"
+							placeholder="Picture verification code"
 							maxlength="4"
 							@keyup.enter="toLogin"
 						/>
@@ -49,7 +49,7 @@
 				</el-form-item>
 
 				<div class="op">
-					<el-button round :loading="saving" @click="toLogin">登录</el-button>
+					<el-button round :loading="saving" @click="toLogin">Login</el-button>
 				</div>
 			</el-form>
 		</div>

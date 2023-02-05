@@ -2,8 +2,8 @@
 	<div class="count-views">
 		<div class="card">
 			<div class="card__header">
-				<span class="label">总访问量</span>
-				<span class="value">8846</span>
+				<span class="label">Count of leads</span>
+				<span class="value">88</span>
 			</div>
 
 			<div class="card__container">
@@ -11,8 +11,8 @@
 			</div>
 
 			<div class="card__footer">
-				<span class="label">日访问量</span>
-				<span class="value">1351</span>
+				<span class="label">Day leads</span>
+				<span class="value">1</span>
 			</div>
 		</div>
 	</div>
