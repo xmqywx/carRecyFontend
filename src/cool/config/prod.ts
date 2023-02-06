@@ -5,5 +5,5 @@ export default {
 	host: proxy["/dev"].target,
 
 	// 请求地址
-	baseUrl: "/dev"
+	baseUrl: "http://3.104.76.231:8001/dev"
 };
