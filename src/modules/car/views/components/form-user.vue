@@ -41,16 +41,6 @@ const emit = defineEmits(["choose"]);
 const role = ref("");
 const roleList = ref<any[]>([]);
 
-async function init() {
-	await service.base.sys.role.list().then((res: any[]) => {
-		roleList.value = res;
-		role.value = roleList.value.find((e) => e.label === "driver").id;
-		Crud.value?.refresh({
-			roleId: role.value
-		});
-	});
-}
-init();
 // cl-table 配置
 const Table = useTable({
 	autoHeight: false,

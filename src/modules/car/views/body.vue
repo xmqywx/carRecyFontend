@@ -4,7 +4,8 @@
 			<!-- 刷新按钮 -->
 			<cl-refresh-btn />
 			<!-- 新增按钮 -->
-			<cl-add-btn />
+			<!--			<cl-add-btn />-->
+			<el-button type="primary" @click="visible = true">Add</el-button>
 			<!-- 删除按钮 -->
 			<cl-multi-delete-btn />
 			<cl-flex1 />
@@ -26,32 +27,41 @@
 		<!-- 新增、编辑 -->
 		<cl-upsert ref="Upsert" />
 	</cl-crud>
+	<cl-dialog title="Choose car" width="80%" v-model="visible">
+		<form-order @choose="chooseOrder" />
+	</cl-dialog>
 </template>
 
 <script lang="ts" name="car-body" setup>
 import { useCrud, useTable, useUpsert } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
+import FormOrder from "./components/form-order.vue";
+import { ref } from "vue";
 
 const { service } = useCool();
-
+const visible = ref<boolean>(false);
 // cl-upsert 配置
 const Upsert = useUpsert({
 	items: [
-		{ label: "Car", prop: "carID", required: true, component: { name: "el-input" } },
 		{
-			label: "QrCode",
-			prop: "qrCode",
+			label: "Car",
+			prop: "carID",
+			required: true,
+			component: { name: "slot-name" }
 		},
 		{
 			label: "Price",
-			prop: "price",
-			component: { name: "el-input-number", props: { min: 0 } }
+			prop: "Price",
+			component: {
+				name: "el-input-number",
+				props: { min: 0 },
+				placeholder: "Please input price"
+			}
 		},
-		{ label: "weight", prop: "weight", component: { name: "el-input" } },
 		{
 			label: "weight",
-			prop: "unitPrice",
-			component: { name: "el-input-number", props: { min: 0 } }
+			prop: "weight",
+			component: { name: "el-input-number", placeholder: "Please input weight" }
 		}
 	]
 });
@@ -64,12 +74,11 @@ const Table = useTable({
 		{ label: "Car", prop: "carID" },
 		{ label: "QrCode", prop: "qrCode" },
 		{ label: "Price", prop: "price" },
-		{ label: "weight", prop: "weight" },
-		{ label: "weight", prop: "unitPrice" },
+		{ label: "Weight", prop: "weight" },
 		{ type: "op", buttons: ["edit", "delete"] }
 	]
 });
-
+function chooseOrder() {}
 // cl-crud 配置
 const Crud = useCrud(
 	{

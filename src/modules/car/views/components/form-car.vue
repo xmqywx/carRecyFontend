@@ -283,7 +283,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 function getUser(keyword: string) {
 	return service.customer.profile.page({
 		size: 10,
-		keyword: keyword
+		keyword: keyword,
+		departmentId: storage.get("departmentID")
 	});
 }
 

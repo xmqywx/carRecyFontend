@@ -3,13 +3,7 @@
 		<el-row>
 			<!-- 刷新按钮 -->
 			<cl-refresh-btn />
-			<el-button @click="getInfo()">test</el-button>
-			<!-- 新增按钮 -->
-			<!--			<el-button type="primary" @click="visibleOrder = true">Add</el-button>-->
-
-			<!-- 删除按钮 -->
-			<!--			<cl-multi-delete-btn />-->
-
+<!--			<cl-add-btn>Add</cl-add-btn>-->
 			<cl-flex1 />
 			<!-- 关键字搜索 -->
 			<cl-search-key />
@@ -17,35 +11,29 @@
 
 		<el-row>
 			<!-- 数据表格 -->
-			<!--			{{ ORDER_STATUS[`${scope.row.status}`] }}-->
 			<cl-table ref="Table">
-				<template #column-status="{ scope }">
-					<el-tag disable-transitions size="small" effect="dark">
-						{{ ORDER_STATUS[`${scope.row.status}`] }}
-					</el-tag>
-				</template>
 				<template #column-carID="{ scope }">
 					<div style="padding: 10px">
 						<el-descriptions title="" size="small" column="5">
 							<el-descriptions-item label="Model">{{
-								scope.row.model
-							}}</el-descriptions-item>
+									scope.row.model
+								}}</el-descriptions-item>
 							<el-descriptions-item label="Brand">{{
-								scope.row.brand
-							}}</el-descriptions-item>
+									scope.row.brand
+								}}</el-descriptions-item>
 							<el-descriptions-item label="Year">{{
-								scope.row.year
-							}}</el-descriptions-item>
+									scope.row.year
+								}}</el-descriptions-item>
 							<el-descriptions-item label="Colour">{{
-								scope.row.colour
-							}}</el-descriptions-item>
+									scope.row.colour
+								}}</el-descriptions-item>
 
 							<el-descriptions-item label="Pickup address">{{
-								scope.row.pickupAddress
-							}}</el-descriptions-item>
+									scope.row.pickupAddress
+								}}</el-descriptions-item>
 							<el-descriptions-item label="note">{{
-								scope.row.note
-							}}</el-descriptions-item>
+									scope.row.note
+								}}</el-descriptions-item>
 						</el-descriptions>
 					</div>
 				</template>
@@ -57,41 +45,33 @@
 			<!-- 分页控件 -->
 			<cl-pagination />
 		</el-row>
+		<el-row>
+			<el-col :span="12">Price: <el-input-number :precision="2" v-model="form.price" /></el-col>
+			<el-col :span="12">Weight: <el-input-number :precision="2" v-model="form.weight" /></el-col>
+		</el-row>
 
-		<!-- 新增、编辑 -->
-		<cl-upsert ref="Upsert" />
 	</cl-crud>
-	<!--	<cl-dialog title="Assign Driver" v-model="visible" :before-close="beforeClose">-->
-	<!--		<form-user @choose="chooseUser" ref="userPopup" />-->
-	<!--	</cl-dialog>-->
-
-	<cl-dialog title="Create Order" width="80%" v-model="visibleAction">
-		<order-action :id="orderID" />
-	</cl-dialog>
 </template>
 
-<script lang="ts" name="order-info" setup>
+<script lang="ts" name="菜单名称" setup>
 import { useCrud, useTable } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
-import OrderAction from "../components/order-action.vue";
 const { service } = useCool();
-import { ref } from "vue";
 import dayjs from "dayjs";
-let selectedOrder: any = {};
-const visible = ref<boolean>(false);
-const visibleAction = ref<boolean>(false);
-const visibleOrder = ref<boolean>(false);
-const orderID = ref(null);
-
+import {reactive, ref} from "vue";
 const ORDER_STATUS = {
 	[0]: "Unpaid",
 	[1]: "Paid",
 	[2]: "Canceled",
 	[3]: "Sent"
 };
-
-// cl-table 配置
+const emit = defineEmits(["chooseCustomer"]);
+const form = reactive({
+	price: 0,
+	weight: 0
+});
 const Table = useTable({
+	autoHeight: false,
 	columns: [
 		{ type: "selection" },
 		// { label: "ID", prop: "id" },
@@ -138,40 +118,16 @@ const Table = useTable({
 			width: 250,
 			buttons: [
 				{
-					label: "Action",
+					label: "Choose",
 					icon: "Message",
 					onClick(options: { scope: obj }) {
-						selectedOrder = options.scope.row;
-						orderID.value = options.scope.row.id;
-						visibleAction.value = true;
-					}
-				},
-				{
-					label: "Invoice",
-					icon: "Message",
-					onClick(options: { scope: obj }) {
-						alert("Sending...");
+						emit("chooseCustomer", options.scope.row);
 					}
 				}
 			]
 		}
 	]
 });
-function beforeClose(done: any) {
-	done();
-}
-function chooseUser(user: obj) {
-	service.order.info
-		.update({
-			id: selectedOrder.id,
-			driverID: user.id
-		})
-		.then(() => {
-			Crud.value?.refresh();
-			visible.value = false;
-		});
-}
-
 function getInfo() {
 	service.order.info.getCarInfo().then(() => {});
 }

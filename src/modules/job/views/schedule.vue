@@ -7,6 +7,7 @@
 				ref="schedulerObject"
 				:group="group"
 				@cellClick="cellClick"
+				@actionBegin="actionBegin"
 				:selectedDate="selectedDate"
 				:eventSettings="eventSettings"
 				:dragStop="dragStop"
@@ -58,10 +59,11 @@
 	</el-row>
 </template>
 <script lang="ts" name="job-info" setup>
-import {storage, useCool} from "/@/cool";
+import { storage, useCool } from "/@/cool";
 import { TreeViewComponent as ejsTreeview } from "@syncfusion/ej2-vue-navigations";
 import {
 	ScheduleComponent as ejsSchedule,
+	Day,
 	Week,
 	Month,
 	Agenda,
@@ -92,13 +94,13 @@ const treeVue = app.component("tree-template", {
 function treeTemplate() {
 	return { template: treeVue };
 }
-provide("schedule", [Week, Month, TimelineViews, TimelineMonth, Agenda, DragAndDrop, Resize]);
+provide("schedule", [Day, Week, Month, TimelineViews, TimelineMonth, Agenda, DragAndDrop, Resize]);
 const ownerDataSource = ref<any>([
 	{ OwnerText: "Nancy", Id: 1, OwnerColor: "#ffaa00" },
 	{ OwnerText: "Steven", Id: 2, OwnerColor: "#f8a398" },
 	{ OwnerText: "Michael", Id: 3, OwnerColor: "#7499e1" }
 ]);
-const selectedDate = new Date(2023, 0, 12);
+const selectedDate = new Date();
 // const allowMultiple = true;
 const group = {
 	allowGroupEdit: false,
@@ -109,7 +111,8 @@ const group = {
 async function getGroup() {
 	service.base.sys.user
 		.list({
-			label: "driver"
+			label: "driver",
+			departmentIds: [storage.get("departmentID")]
 		})
 		.then((res) => {
 			ownerDataSource.value = res.map((item) => {
@@ -138,7 +141,8 @@ const treeviewFields = reactive({
 function getToBeAssignedJobs() {
 	service.job.info
 		.list({
-			status: 0
+			status: 0,
+			departmentId: storage.get("departmentID")
 		})
 		.then((res: any) => {
 			let treeviewComponentObject = treeviewObject.value.ej2Instances;
@@ -150,7 +154,8 @@ function getToBeAssignedJobs() {
 function getEvents() {
 	service.job.info
 		.list({
-			date: selectedDate
+			date: selectedDate,
+			departmentId: storage.get("departmentID")
 		})
 		.then((res: any) => {
 			let schedulerComponentObject = schedulerObject.value.ej2Instances;
@@ -187,22 +192,28 @@ async function resizeStop(event) {
 		schedulerStart: +event.data.StartTime,
 		schedulerEnd: +event.data.EndTime
 	});
-	// await service.order.action.add({
-	// 	authorID: storage.get("userInfo").id,
-	// 	orderID: row.id,
-	// 	timestamp: +new Date(),
-	// 	description: "Generated order",
-	// 	type: 0
-	// });
 }
 const schedulerObject: any = ref();
 const treeviewObject: any = ref();
 function cellClick(args: any) {
 	args.cancel = true;
 }
+
+async function actionBegin(args: any) {
+	if (args.requestType === "eventRemove") {
+		const deletedRecord = args.deletedRecords[0];
+		await service.job.info.update({
+			id: deletedRecord.Id,
+			status: 0,
+			driverID: null,
+			schedulerStart: null,
+			schedulerEnd: null
+		});
+		getToBeAssignedJobs();
+	}
+}
 async function onTreeDragStop(args: any) {
 	args.cancel = true;
-
 	let schedulerComponentObject = schedulerObject.value.ej2Instances;
 	let cellData = schedulerComponentObject.getCellDetails(args.target);
 	let treeviewComponentObject = treeviewObject.value.ej2Instances;

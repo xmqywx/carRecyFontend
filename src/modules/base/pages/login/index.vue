@@ -27,27 +27,6 @@
 					/>
 				</el-form-item>
 
-				<el-form-item label="Verification Code">
-					<div class="row">
-						<input
-							v-model="form.verifyCode"
-							placeholder="Picture verification code"
-							maxlength="4"
-							@keyup.enter="toLogin"
-						/>
-
-						<captcha
-							:ref="setRefs('captcha')"
-							v-model="form.captchaId"
-							@change="
-								() => {
-									form.verifyCode = '';
-								}
-							"
-						/>
-					</div>
-				</el-form-item>
-
 				<div class="op">
 					<el-button round :loading="saving" @click="toLogin">Login</el-button>
 				</div>
@@ -61,9 +40,9 @@ import { reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { useCool } from "/@/cool";
 import { useBase } from "/$/base";
-import Captcha from "./components/captcha.vue";
+// import Captcha from "./components/captcha.vue";
 
-const { refs, setRefs, router, service } = useCool();
+const { refs, router, service } = useCool();
 const { user, app } = useBase();
 
 // 状态1
@@ -72,24 +51,22 @@ const saving = ref(false);
 // 表单数据
 const form = reactive({
 	username: "",
-	password: "",
-	captchaId: "",
-	verifyCode: ""
+	password: ""
 });
 
 // 登录
 async function toLogin() {
 	if (!form.username) {
-		return ElMessage.error("用户名不能为空");
+		return ElMessage.error("Please input username");
 	}
 
 	if (!form.password) {
-		return ElMessage.error("密码不能为空");
+		return ElMessage.error("Please input password");
 	}
-
-	if (!form.verifyCode) {
-		return ElMessage.error("图片验证码不能为空");
-	}
+	//
+	// if (!form.verifyCode) {
+	// 	return ElMessage.error("图片验证码不能为空");
+	// }
 
 	saving.value = true;
 

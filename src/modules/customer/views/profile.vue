@@ -44,9 +44,9 @@
 
 <script lang="ts" name="customer-profile" setup>
 import { useCrud, useTable, useUpsert } from "@cool-vue/crud";
-import { useCool } from "/@/cool";
+import {storage, useCool} from "/@/cool";
 import dayjs from "dayjs";
-
+import { router } from "../router";
 const { service } = useCool();
 
 // cl-upsert 配置
@@ -171,7 +171,13 @@ async function expandChange(row: any, expand: any) {
 // cl-crud 配置
 const Crud = useCrud(
 	{
-		service: service.customer.profile
+		service: service.customer.profile,
+		async onRefresh(params, { next }) {
+			await next({
+				...params,
+				departmentId: storage.get("departmentID")
+			});
+		}
 	},
 	(app) => {
 		app.refresh();

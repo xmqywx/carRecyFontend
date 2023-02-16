@@ -5,6 +5,7 @@
 			<cl-refresh-btn />
 			<!-- 新增按钮 -->
 			<cl-add-btn />
+<!--			<el-button @click="upload">Upload</el-button>-->
 			<!-- 删除按钮 -->
 			<cl-multi-delete-btn />
 			<cl-flex1 />
@@ -100,7 +101,9 @@ const Table = useTable({
 		{ type: "op", buttons: ["edit", "delete"] }
 	]
 });
-
+function upload() {
+	service.vehicle.profile.upload();
+}
 // cl-crud 配置
 const Crud = useCrud(
 	{

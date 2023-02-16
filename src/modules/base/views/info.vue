@@ -1,22 +1,22 @@
 <template>
 	<div class="view-my">
-		<div class="title">基本信息</div>
+		<div class="title">Profile</div>
 
 		<el-form label-width="100px" :model="form" :disabled="loading">
-			<el-form-item label="头像">
+			<el-form-item label="Avatar">
 				<cl-upload v-model="form.headImg" />
 			</el-form-item>
 
-			<el-form-item label="昵称">
-				<el-input v-model="form.nickName" placeholder="请填写昵称" />
+			<el-form-item label="Username">
+				<el-input v-model="form.nickName" placeholder="Please input username" />
 			</el-form-item>
 
-			<el-form-item label="密码">
+			<el-form-item label="Password">
 				<el-input v-model="form.password" type="password" />
 			</el-form-item>
 
 			<el-form-item>
-				<el-button type="primary" :disabled="loading" @click="save">保存修改</el-button>
+				<el-button type="primary" :disabled="loading" @click="save">Save</el-button>
 			</el-form-item>
 		</el-form>
 	</div>
@@ -52,7 +52,7 @@ async function save() {
 		})
 		.then(() => {
 			form.password = "";
-			ElMessage.success("修改成功");
+			ElMessage.success("Updated");
 			user.get();
 		})
 		.catch((err) => {

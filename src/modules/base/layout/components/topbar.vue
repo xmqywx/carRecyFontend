@@ -14,19 +14,26 @@
 
 		<!-- 路由导航 -->
 		<route-nav />
-
+		<div style="font-size: 14px">
+			Yard:
+			<el-select @change="changeYard" v-if="isAdmin" v-model="departmentID" style="width: 150px">
+				<el-option
+					v-for="item in departmentList"
+					:key="item.id"
+					:value="item.id"
+					:label="item.name"
+				></el-option>
+			</el-select>
+			<span v-if="!isAdmin">{{ departmentName }}</span>
+		</div>
 		<div class="flex1"></div>
 
 		<!-- 工具栏 -->
-		<ul class="app-topbar__tools">
-<!--			<li>-->
-<!--				<select></select>-->
-<!--			</li>-->
-
-			<li>
-				<cl-theme />
-			</li>
-		</ul>
+		<!--		<ul class="app-topbar__tools">-->
+		<!--			<li>-->
+		<!--				<cl-theme />-->
+		<!--			</li>-->
+		<!--		</ul>-->
 
 		<!-- 用户信息 -->
 		<div class="app-topbar__user" v-if="user.info">
@@ -58,10 +65,34 @@ import { useBase } from "/$/base";
 import { useCool } from "/@/cool";
 import RouteNav from "./route-nav.vue";
 import AMenu from "./amenu.vue";
-
+import { storage } from "/@/cool/utils";
+import { ref } from "vue";
+import BaseSysDepartmentEntity = Eps.BaseSysDepartmentEntity;
 const { router, service } = useCool();
 const { user, app } = useBase();
+const departmentList = ref<BaseSysDepartmentEntity[]>([]);
+const userInfo = storage.get("userInfo");
+const departmentDefault = storage.get("departmentID");
+const isAdmin = userInfo.roleLabel === "admin";
+const departmentID: any = ref();
+const departmentName = userInfo.departmentName;
+if (!departmentDefault) {
+	storage.set("departmentID", Number(userInfo.departmentId));
+}
 
+async function getDepartments() {
+	service.base.sys.department.list().then((res) => {
+		departmentList.value = res.filter((e) => e.id != 1);
+		departmentID.value =
+			departmentDefault && departmentDefault != 1
+				? departmentDefault
+				: departmentList.value[0].id;
+		storage.set("departmentID", departmentID.value);
+	});
+}
+if (isAdmin) {
+	getDepartments();
+}
 // 跳转
 async function onCommand(name: string) {
 	switch (name) {
@@ -73,6 +104,11 @@ async function onCommand(name: string) {
 			user.logout();
 			break;
 	}
+}
+
+function changeYard(value: any) {
+	storage.set("departmentID", value);
+	window.location.href = window.location.href;
 }
 </script>
 

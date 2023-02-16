@@ -76,7 +76,7 @@
 import { inject, onMounted, ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useCool } from "/@/cool";
-import { deepTree, revDeepTree } from "/@/cool/utils";
+import { revDeepTree } from "/@/cool/utils";
 import { isArray } from "lodash-es";
 import { ContextMenu, useForm } from "@cool-vue/crud";
 import { Refresh as RefreshIcon, Operation, MoreFilled } from "@element-plus/icons-vue";
@@ -132,7 +132,7 @@ async function refresh() {
 	isDrag.value = false;
 
 	await service.base.sys.department.list().then((res: any[]) => {
-		list.value = deepTree(res);
+		list.value = res;
 
 		if (!info.value) {
 			info.value = list.value[0];
@@ -171,20 +171,23 @@ function rowEdit(e: any) {
 				label: "Yard name",
 				prop: "name",
 				component: {
-					name: "el-input"
+					name: "el-input",
+					props: {
+						placeholder: "Please input yard name"
+					}
 				},
 				required: true
 			},
-			{
-				label: "Parent Name",
-				prop: "parentName",
-				component: {
-					name: "el-input",
-					props: {
-						disabled: true
-					}
-				}
-			},
+			// {
+			// 	label: "Parent Name",
+			// 	prop: "parentName",
+			// 	component: {
+			// 		name: "el-input",
+			// 		props: {
+			// 			disabled: true
+			// 		}
+			// 	}
+			// },
 			{
 				label: "Sort",
 				prop: "orderNum",
@@ -203,7 +206,7 @@ function rowEdit(e: any) {
 			submit(data, { done, close }) {
 				service.base.sys.department[method]({
 					id: e.id,
-					parentId: e.parentId,
+					parentId: 1,
 					name: data.name,
 					orderNum: data.orderNum
 				})
@@ -239,7 +242,7 @@ function rowDel(e: any) {
 				} else {
 					ElMessageBox.confirm(
 						`"All user which from ${e.name}" department have moved to "${e.parentName}" department`,
-						"删除成功"
+						"Deleted"
 					);
 				}
 			});

@@ -70,6 +70,7 @@ export const useUserStore = defineStore("user", function () {
 	function clear() {
 		storage.remove("userInfo");
 		storage.remove("token");
+		storage.remove("departmentID");
 		token.value = "";
 		info.value = null;
 	}

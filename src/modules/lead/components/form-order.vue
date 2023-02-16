@@ -3,7 +3,7 @@
 		<el-row>
 			<!-- 刷新按钮 -->
 			<cl-refresh-btn />
-			<cl-add-btn>Add</cl-add-btn>
+<!--			<cl-add-btn>Add</cl-add-btn>-->
 			<cl-flex1 />
 			<!-- 关键字搜索 -->
 			<cl-search-key />
@@ -27,6 +27,7 @@
 <script lang="ts" name="菜单名称" setup>
 import { useCrud, useTable, useUpsert } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
+import dayjs from "dayjs";
 const { service } = useCool();
 const emit = defineEmits(["chooseCustomer"]);
 const Upsert = useUpsert({
@@ -107,39 +108,68 @@ const Upsert = useUpsert({
 });
 // cl-table 配置
 const Table = useTable({
-	autoHeight: false,
 	columns: [
+		{ type: "selection" },
+		// { label: "ID", prop: "id" },
+		{ label: "Car", prop: "carID", type: "expand", width: 50 },
 		{
-			label: "Name",
-			prop: "username",
+			label: "Customer",
+			prop: "customerID",
 			formatter: (row) => {
 				return row.firstName + " " + row.surname;
 			}
 		},
-		{ label: "Email", prop: "emailAddress" },
-		{ label: "phone", prop: "phoneNumber" },
-		{ label: "address", prop: "address" },
-		{ label: "licence", prop: "licence" },
+		{ label: "Status", prop: "status" },
 		{
+			label: "Quoted Price",
+			prop: "recommendedPrice",
+			formatter: (row) => {
+				return row.recommendedPrice ? "$" + Number(row.recommendedPrice).toFixed(2) : "";
+			}
+		},
+		{
+			label: "Payment Price",
+			prop: "actualPaymentPrice",
+			formatter: (row) => {
+				return row.actualPaymentPrice
+					? "$" + Number(row.actualPaymentPrice).toFixed(2)
+					: "";
+			}
+		},
+		{
+			label: "Pickup Address",
+			prop: "pickupAddress"
+		},
+		{
+			label: "Create Time",
+			prop: "createTime",
+			formatter: (row) => {
+				return dayjs(row.createTime).format("DD-MM-YYYY HH:mm");
+			}
+		},
+		// { label: "更新时间", prop: "updateTime" },
+		{
+			label: "Options",
 			type: "op",
+			width: 250,
 			buttons: [
 				{
-					label: "Choose",
-					type: "primary",
-					icon: "Check",
+					label: "Action",
+					icon: "Message",
 					onClick(options: { scope: obj }) {
-						emit("chooseCustomer", options.scope.row);
+						selectedOrder = options.scope.row;
+						orderID.value = options.scope.row.id;
+						visibleAction.value = true;
 					}
 				}
 			]
 		}
 	]
 });
-
 // cl-crud 配置
 const Crud = useCrud(
 	{
-		service: service.customer.profile
+		service: service.order.info
 	},
 	(app) => {
 		app.refresh();
