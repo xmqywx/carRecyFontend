@@ -28,12 +28,14 @@
 				placement="top"
 			>
 				<el-card v-if="item.type == 1">
-					<h4>Comment by <span style="color:#6c757d">{{ item.username }}</span></h4>
+					<h4>
+						Comment by <span style="color: #6c757d">{{ item.username }}</span>
+					</h4>
 					<p>{{ item.description }}</p>
 				</el-card>
 				<span v-if="item.type == 0">
 					<el-tag type="success">System</el-tag>
-					<span style="color:#6c757d">{{ item.username }}:</span>
+					<span style="color: #6c757d">{{ item.username }}:</span>
 					{{ item.description }}
 				</span>
 			</el-timeline-item>
@@ -41,7 +43,7 @@
 	</div>
 </template>
 
-<script lang="ts" name="菜单名称" setup>
+<script lang="ts" name="Action" setup>
 import { useCool } from "/@/cool";
 import { ref, reactive } from "vue";
 import type { FormInstance, FormRules } from "element-plus";

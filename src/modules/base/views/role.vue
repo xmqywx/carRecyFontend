@@ -65,36 +65,53 @@ const Upsert = useUpsert({
 	items: [
 		{
 			prop: "name",
-			label: "名称",
+			label: "Name",
 			span: 12,
-			required: true,
+			rules: [
+				{
+					required: true,
+					message: "Name is required"
+				}
+			],
 			component: {
-				name: "el-input"
+				name: "el-input",
+				props: {
+					placeholder: "Please input role name"
+				}
 			}
 		},
 		{
 			prop: "label",
-			label: "标识",
+			label: "Label",
 			span: 12,
-			required: true,
+			rules: [
+				{
+					required: true,
+					message: "Label is required"
+				}
+			],
 			component: {
-				name: "el-input"
+				name: "el-input",
+				props: {
+					placeholder: "Please input label"
+				}
 			}
 		},
 		{
 			prop: "remark",
-			label: "备注",
+			label: "Remark",
 			span: 24,
 			component: {
 				name: "el-input",
 				props: {
 					type: "textarea",
+					placeholder: "Please input remark",
 					rows: 4
 				}
 			}
 		},
 		{
-			label: "功能权限",
+			label: "Menu List",
 			prop: "menuIdList",
 			value: [],
 			component: {
@@ -102,7 +119,7 @@ const Upsert = useUpsert({
 			}
 		},
 		{
-			label: "数据权限",
+			label: "Relevance",
 			prop: "relevance",
 			flex: false,
 			component: {
@@ -136,34 +153,34 @@ const Table = useTable({
 		},
 		{
 			prop: "name",
-			label: "名称",
+			label: "Name",
 			minWidth: 150
 		},
 		{
 			prop: "label",
-			label: "标识",
+			label: "Label",
 			minWidth: 120
 		},
 		{
 			prop: "remark",
-			label: "备注",
+			label: "Remark",
 			showOverflowTooltip: true,
 			minWidth: 150
 		},
 		{
 			prop: "createTime",
-			label: "创建时间",
+			label: "Create Time",
 			sortable: "custom",
 			minWidth: 160
 		},
 		{
 			prop: "updateTime",
-			label: "更新时间",
+			label: "Update Time",
 			sortable: "custom",
 			minWidth: 160
 		},
 		{
-			label: "操作",
+			label: "Options",
 			type: "op",
 			buttons: ["edit", "delete"]
 		}

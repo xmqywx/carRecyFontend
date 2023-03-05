@@ -1,6 +1,6 @@
 <template>
 	<cl-view-group :title="title">
-		<template #left>
+		<template #left v-if="userInfo.roleLabel == 'admin'">
 			<dept-tree @row-click="onDeptRowClick" @user-add="onDeptUserAdd" />
 		</template>
 
@@ -76,13 +76,13 @@
 <script lang="ts" name="sys-user" setup>
 import { useTable, useUpsert, useCrud } from "@cool-vue/crud";
 import { computed, reactive } from "vue";
-import { useCool } from "/@/cool";
+import { storage, useCool } from "/@/cool";
 import DeptMove from "./components/dept/move.vue";
 import DeptTree from "./components/dept/tree.vue";
 import dayjs from "dayjs";
 
 const { service, refs, setRefs } = useCool();
-
+const userInfo = storage.get("userInfo");
 // 选择项
 const selects = reactive<any>({
 	dept: {},
@@ -96,8 +96,22 @@ const title = computed(() => {
 
 // cl-crud 配置
 const Crud = useCrud({
-	service: service.base.sys.user
+	service: service.base.sys.user,
+	async onRefresh(params, { next }) {
+		if (userInfo.roleLabel !== "admin") {
+			await next({
+				...params,
+				departmentIds: [storage.get("departmentID")]
+			});
+		} else {
+			next(params);
+		}
+	}
 });
+
+if (userInfo.roleLabel !== "admin") {
+	Crud.value?.refresh();
+}
 
 // cl-table 配置
 const Table = useTable({
@@ -212,11 +226,18 @@ const Upsert = useUpsert({
 		{
 			prop: "username",
 			label: "User name",
-			required: true,
+			rules: [
+				{
+					required: true,
+					message: "User name is required"
+				}
+			],
 			span: 12,
 			component: {
 				name: "el-input",
-				placeholder: "Please input user name"
+				props: {
+					placeholder: "Please input user name"
+				}
 			}
 		},
 		() => {
@@ -224,7 +245,6 @@ const Upsert = useUpsert({
 				prop: "password",
 				label: "Password",
 				span: 12,
-				required: Upsert.value?.mode == "add",
 				component: {
 					name: "el-input",
 					props: {
@@ -234,9 +254,13 @@ const Upsert = useUpsert({
 				},
 				rules: [
 					{
+						required: Upsert.value?.mode == "add",
+						message: "Password is required"
+					},
+					{
 						min: 6,
 						max: 16,
-						message: "密码长度在 6 到 16 个字符"
+						message: "Password length is between 6 and 16 characters"
 					}
 				]
 			};
@@ -245,7 +269,12 @@ const Upsert = useUpsert({
 			prop: "roleIdList",
 			label: "Role",
 			value: [],
-			required: true,
+			rules: [
+				{
+					required: true,
+					message: "Please select at least one role"
+				}
+			],
 			component: {
 				name: "el-select",
 				options: [],

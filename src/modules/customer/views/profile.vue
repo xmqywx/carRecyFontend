@@ -6,7 +6,7 @@
 			<!-- 新增按钮 -->
 			<cl-add-btn>Add</cl-add-btn>
 			<!-- 删除按钮 -->
-			<cl-multi-delete-btn>Delete</cl-multi-delete-btn>
+<!--			<cl-multi-delete-btn>Delete</cl-multi-delete-btn>-->
 			<cl-flex1 />
 			<!--			<cl-filter label="Name">-->
 			<!--				<el-input placeholder="Please input name" clearable v-model="form.name" size="mini"></el-input>-->
@@ -44,19 +44,36 @@
 
 <script lang="ts" name="customer-profile" setup>
 import { useCrud, useTable, useUpsert } from "@cool-vue/crud";
-import {storage, useCool} from "/@/cool";
+import { storage, useCool } from "/@/cool";
 import dayjs from "dayjs";
-import { router } from "../router";
+
 const { service } = useCool();
 
 // cl-upsert 配置
 const Upsert = useUpsert({
+	onSubmit(data: obj, event: { close: fn; done: fn; next: ClCrud.Service["api"]["update"] }) {
+		const departmentId = storage.get("departmentID");
+		event
+			.next({
+				...data,
+				departmentId
+			})
+			.then(() => {
+				Crud.value?.refresh();
+				event.close();
+			});
+	},
 	items: [
 		{
 			label: "First Name",
 			span: 12,
 			prop: "firstName",
-			required: true,
+			rules: [
+				{
+					required: true,
+					message: "First name is required"
+				}
+			],
 			component: {
 				name: "el-input",
 				props: {
@@ -68,7 +85,12 @@ const Upsert = useUpsert({
 			label: "Surname",
 			span: 12,
 			prop: "surname",
-			required: true,
+			rules: [
+				{
+					required: true,
+					message: "Surname is required"
+				}
+			],
 			component: {
 				name: "el-input",
 				props: {
@@ -80,6 +102,16 @@ const Upsert = useUpsert({
 			label: "Email",
 			span: 12,
 			prop: "emailAddress",
+			rules: [
+				{
+					required: true,
+					message: "Email is required"
+				},
+				{
+					type: "email",
+					message: "Please enter a valid email"
+				}
+			],
 			component: {
 				name: "el-input",
 				props: {
@@ -91,11 +123,13 @@ const Upsert = useUpsert({
 			label: "Phone",
 			span: 12,
 			prop: "phoneNumber",
-			props: {
-				placeholder: "test",
-				mergeProp: true,
-				error: "Please input phone number"
-			},
+			rules: [
+				{
+					required: true,
+					message: "Phone number is required"
+				}
+			],
+
 			// rules: { type: "number", message: "Please input correct phone number." },
 			component: {
 				name: "el-input",
@@ -105,7 +139,7 @@ const Upsert = useUpsert({
 			}
 		},
 		{
-			label: "address",
+			label: "Address",
 			prop: "address",
 			component: {
 				name: "el-input",
@@ -115,7 +149,7 @@ const Upsert = useUpsert({
 			}
 		},
 		{
-			label: "licence",
+			label: "Licence",
 			prop: "licence",
 			component: {
 				name: "el-input",
@@ -130,15 +164,15 @@ const Upsert = useUpsert({
 // cl-table 配置
 const Table = useTable({
 	columns: [
-		{ type: "selection" },
+		// { type: "selection" },
 		// { label: "ID", prop: "id" },
 		{ label: "First name", prop: "firstName" },
 		{ label: "Surname", prop: "surname" },
 		{ label: "Cars", prop: "id", type: "expand", width: 70 },
 		{ label: "Email", prop: "emailAddress" },
-		{ label: "phone", prop: "phoneNumber" },
-		{ label: "address", prop: "address" },
-		{ label: "licence", prop: "licence" },
+		{ label: "Phone", prop: "phoneNumber" },
+		{ label: "Address", prop: "address" },
+		{ label: "Licence", prop: "licence" },
 		{
 			label: "Created time",
 			prop: "createTime",
@@ -146,17 +180,17 @@ const Table = useTable({
 				return dayjs(row.createTime).format("DD-MM-YYYY HH:mm");
 			}
 		},
-		{
-			label: "Updated time",
-			prop: "updateTime",
-			formatter: (row) => {
-				return dayjs(row.createTime).format("DD-MM-YYYY HH:mm");
-			}
-		},
+		// {
+		// 	label: "Updated time",
+		// 	prop: "updateTime",
+		// 	formatter: (row) => {
+		// 		return dayjs(row.createTime).format("DD-MM-YYYY HH:mm");
+		// 	}
+		// },
 		{
 			type: "op",
 			label: "Options",
-			buttons: ["edit", "delete"]
+			buttons: ["edit"]
 		}
 	]
 });

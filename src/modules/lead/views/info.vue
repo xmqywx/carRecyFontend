@@ -35,6 +35,7 @@
 				<el-radio-button :label="-1">All</el-radio-button>
 				<el-radio-button :label="0">Lead</el-radio-button>
 				<el-radio-button :label="1">Booked</el-radio-button>
+				<el-radio-button :label="2">Archived</el-radio-button>
 			</el-radio-group>
 
 			<cl-flex1 />
@@ -54,12 +55,41 @@
 				<template #column-image="{ scope }">
 					<el-avatar shape="square" :src="scope.row.image"></el-avatar>
 				</template>
-				<template #slot-edit="{ scope }">
-					<el-button type="primary" @click="openEdit(scope.row)">Edit</el-button>
+				<template #column-registrationNumber="{ scope }">
+					{{ scope.row.registrationNumber }}
+					<el-tag disable-transitions size="small" effect="dark">
+						{{ scope.row.state }}
+					</el-tag>
 				</template>
+				<template #slot-edit="{ scope }">
+					<el-button
+						link
+						v-if="scope.row.status !== 2"
+						type="primary"
+						@click="openEdit(scope.row)"
+						>Edit</el-button
+					>
+				</template>
+
 				<template #slot-order="{ scope }">
-					<el-button v-if="scope.row.status === 0" type="success" @click="open(scope.row)"
+					<el-button
+						link
+						v-if="scope.row.status === 0"
+						type="success"
+						@click="open(scope.row)"
 						>Book</el-button
+					>
+				</template>
+				<template #slot-action="{ scope }">
+					<el-button link type="info" @click="openAction(scope.row)">Action</el-button>
+				</template>
+				<template #slot-archive="{ scope }">
+					<el-button
+						link
+						v-if="scope.row.status === 0"
+						type="warning"
+						@click="archive(scope.row)"
+						>Archive</el-button
 					>
 				</template>
 			</cl-table>
@@ -86,13 +116,14 @@
 	</cl-dialog>
 </template>
 
-<script lang="ts" name="order-info" setup>
+<script lang="ts" name="Booking" setup>
 import { useCrud, useForm, useTable } from "@cool-vue/crud";
 import { storage, useCool } from "/@/cool";
 import FormCar from "../components/form-car.vue";
 import OrderAction from "../components/order-action.vue";
+import { ElMessageBox } from "element-plus";
 const { service } = useCool();
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import dayjs from "dayjs";
 import OrderInfoEntity = Eps.OrderInfoEntity;
 import { ElMessage } from "element-plus";
@@ -182,12 +213,14 @@ const Table = useTable({
 		},
 		{
 			label: "Car name",
+			width: 150,
 			prop: "name"
 		},
-		// {
-		// 	label: "Brand",
-		// 	prop: "brand"
-		// },
+		{
+			label: "Registration Number",
+			width: 100,
+			prop: "registrationNumber"
+		},
 		{
 			label: "Year",
 			prop: "year"
@@ -197,7 +230,7 @@ const Table = useTable({
 			prop: "series"
 		},
 		{
-			label: "Vin Number",
+			label: "VIN",
 			prop: "vinNumber"
 		},
 		// {
@@ -220,7 +253,9 @@ const Table = useTable({
 			label: "Payment Price",
 			prop: "actualPaymentPrice",
 			formatter: (row) => {
-				return row.actualPaymentPrice ? "$" + Number(row.actualPaymentPrice).toFixed(2) : "";
+				return row.actualPaymentPrice
+					? "$" + Number(row.actualPaymentPrice).toFixed(2)
+					: "";
 			}
 		},
 		{
@@ -234,43 +269,34 @@ const Table = useTable({
 		// 		return row.actualPaymentPrice ? "$" + Number(row.actualPaymentPrice).toFixed(2) : "";
 		// 	}
 		// },
-		// {
-		// 	label: "Create Time",
-		// 	prop: "createTime",
-		// 	formatter: (row) => {
-		// 		return dayjs(row.createTime).format("DD-MM-YYYY HH:mm");
-		// 	}
-		// },
 		{
-			label: "Update Time",
-			prop: "updateTime",
+			label: "Create Time",
+			prop: "createTime",
 			formatter: (row) => {
-				return dayjs(row.updateTime).format("DD-MM-YYYY HH:mm");
+				return dayjs(row.createTime).format("DD-MM-YYYY HH:mm");
 			}
 		},
+		// {
+		// 	label: "Update Time",
+		// 	prop: "updateTime",
+		// 	formatter: (row) => {
+		// 		return dayjs(row.updateTime).format("DD-MM-YYYY HH:mm");
+		// 	}
+		// },
 		// { label: "更新时间", prop: "updateTime" },
 		{
 			label: "Options",
 			type: "op",
 			width: 250,
 			align: "left",
-			buttons: [
-				"slot-edit",
-				{
-					label: "Action",
-					icon: "Message",
-					onClick(options: { scope: obj }) {
-						// selectedOrder = options.scope.row;
-						orderID.value = options.scope.row.id;
-						visibleAction.value = true;
-					}
-				},
-				"slot-order"
-			]
+			buttons: ["slot-edit", "slot-action", "slot-order", "slot-archive"]
 		}
 	]
 });
-
+function openAction(row: any) {
+	orderID.value = row.id;
+	visibleAction.value = true;
+}
 function open(row: any) {
 	Form.value?.open({
 		title: "Confirm pickup address",
@@ -312,6 +338,32 @@ function open(row: any) {
 		}
 	});
 }
+
+function archive(row: OrderInfoEntity) {
+	ElMessageBox.confirm("Are you sure to archive this lead?")
+		.then(() => {
+			service.order.info
+				.update({
+					id: row.id,
+					status: 2
+				})
+				.then(async () => {
+					await service.order.action.add({
+						authorID: storage.get("userInfo").id,
+						orderID: row.id,
+						timestamp: +new Date(),
+						description: "Archive lead",
+						type: 0
+					});
+
+					Crud.value?.refresh();
+				});
+		})
+		.catch(() => {
+			// catch error
+		});
+}
+
 function transOrder(row: OrderInfoEntity) {
 	const departmentId = storage.get("departmentID");
 	service.order.info
@@ -355,9 +407,7 @@ function openEdit(item: any) {
 }
 function changeStatus() {
 	let hiddenColumn: string[] = [];
-	Crud.value?.refresh({
-		order: "updateTime"
-	});
+	Crud.value?.refresh();
 	const showColumn = ["payMethod", "actualPaymentPrice"];
 	if (status.value === -1) {
 		hiddenColumn = ["payMethod", "actualPaymentPrice"];

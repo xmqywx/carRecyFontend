@@ -11,13 +11,16 @@
 				:selectedDate="selectedDate"
 				:eventSettings="eventSettings"
 				:dragStop="dragStop"
+				currentView="TimelineDay"
 				:resizeStop="resizeStop"
+				startHour="07:00"
+				endHour="23:00"
 			>
 				<e-views>
+					<e-view option="TimelineDay" class="e-active-view"></e-view>
+					<e-view option="TimelineMonth"></e-view>
 					<e-view option="Week"></e-view>
 					<e-view option="Month"></e-view>
-					<e-view option="TimelineDay"></e-view>
-					<e-view option="TimelineMonth"></e-view>
 				</e-views>
 				<e-resources>
 					<e-resource
@@ -47,7 +50,6 @@
 				<ejs-treeview
 					id="Tree"
 					:fields="treeviewFields"
-					:nodeTemplate="treeTemplate"
 					cssClass="treeview-external-drag"
 					:allowDragAndDrop="true"
 					:nodeDragStop="onTreeDragStop"
@@ -78,14 +80,21 @@ import {
 } from "@syncfusion/ej2-vue-schedule";
 import { reactive, provide, ref, createApp } from "vue";
 const { service } = useCool();
+
 const app = createApp({
 	template: ""
 });
 const treeVue = app.component("tree-template", {
 	data() {
 		return {
-			data: {}
+			data: {
+				pickupAddress: "",
+				brand: ""
+			}
 		};
+	},
+	mounted() {
+		console.log(this.data);
 	},
 	template:
 		'<div id="waiting"><div id="waitdetails"><div id="waitlist">{{data.pickupAddress}}</div>' +
@@ -94,7 +103,7 @@ const treeVue = app.component("tree-template", {
 function treeTemplate() {
 	return { template: treeVue };
 }
-provide("schedule", [Day, Week, Month, TimelineViews, TimelineMonth, Agenda, DragAndDrop, Resize]);
+provide("schedule", [Day, TimelineViews, TimelineMonth, Week, Month, Agenda, DragAndDrop, Resize]);
 const ownerDataSource = ref<any>([
 	{ OwnerText: "Nancy", Id: 1, OwnerColor: "#ffaa00" },
 	{ OwnerText: "Steven", Id: 2, OwnerColor: "#f8a398" },
@@ -135,7 +144,7 @@ const eventSettings = reactive({
 const treeviewFields = reactive({
 	dataSource: [],
 	id: "id",
-	text: "driverID"
+	text: "name"
 });
 
 function getToBeAssignedJobs() {
@@ -147,7 +156,13 @@ function getToBeAssignedJobs() {
 		.then((res: any) => {
 			let treeviewComponentObject = treeviewObject.value.ej2Instances;
 
-			treeviewComponentObject.fields.dataSource = res || [];
+			treeviewComponentObject.fields.dataSource = (res || []).map((item: any) => {
+				return {
+					...item,
+					name: `<div id="waiting"><div id="waitdetails"><div id="waitlist">${item.pickupAddress}</div>
+						<div id="waitcategory">${item.brand} - ${item.model} - ${item.year}</div></div></div>`
+				};
+			});
 		});
 }
 
@@ -232,7 +247,7 @@ async function onTreeDragStop(args: any) {
 		OwnerId: ownerDataSource.value[cellData.groupIndex].Id
 	};
 	// console.log(eventData)
-	schedulerComponentObject.addEvent(eventData);
+	// schedulerComponentObject.addEvent(eventData);
 	await service.job.info.update({
 		id: eventData.Id,
 		status: 1,
@@ -240,6 +255,7 @@ async function onTreeDragStop(args: any) {
 		schedulerStart: +cellData.startTime,
 		schedulerEnd: +cellData.endTime
 	});
+	schedulerComponentObject.addEvent(eventData);
 	getToBeAssignedJobs();
 	// schedulerComponentObject.openEditor(eventData, "Add", true);
 }
@@ -310,7 +326,6 @@ async function onTreeDragStop(args: any) {
 	font-size: 10px;
 	opacity: 0.6;
 	padding-left: 10px;
-	padding-top: 5px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }

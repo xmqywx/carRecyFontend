@@ -9,52 +9,65 @@
 		>
 			<el-row :gutter="40">
 				<el-col :span="24">
-					<el-form-item label="Customer" v-if="!isEdit">
-						<vue3-simple-typeahead
-							id="typeahead_id"
-							placeholder="Choose..."
-							:items="options"
-							:minInputLength="1"
-							@onInput="remoteMethod"
-							@selectItem="selectCustomer"
-							style="width: 50%"
-							ref="inputRef"
-							:itemProjection="
-								(item) => {
-									return item.firstName + ' ' + item.surname;
-								}
-							"
+					<div style="width: 50%">
+						<el-form-item
+							label="Customer (type the name or phone to find existing customer or click on New customer button to create a new one）"
+							v-if="!isEdit"
 						>
-							<template #list-item-text="slot">
-								<div>
-									{{ slot.item.firstName }} {{ slot.item.surname }}
-									<div style="float: right; font-size: 12px">
-										{{ slot.item.phoneNumber }}
+							<vue3-simple-typeahead
+								id="typeahead_id"
+								placeholder="Choose..."
+								:items="options"
+								:minInputLength="1"
+								@onInput="remoteMethod"
+								@selectItem="selectCustomer"
+								style="width: 50%"
+								ref="inputRef"
+								:itemProjection="
+									(item) => {
+										return (
+											item.firstName +
+											' ' +
+											item.surname +
+											item.phoneNumber +
+											item.emailAddress
+										);
+									}
+								"
+							>
+								<template #list-item-text="slot">
+									<div>
+										{{ slot.item.firstName }} {{ slot.item.surname }}
+										<div style="float: right; font-size: 12px">
+											{{ slot.item.phoneNumber }}
+										</div>
 									</div>
-								</div>
-								<el-row>
-									<el-col
-										:span="12"
-										style="float: right; font-size: 12px"
-										v-if="slot.item.emailAddress"
-									>
-										{{ slot.item.emailAddress }}
-									</el-col>
-									<el-col
-										:span="12"
-										style="float: right; font-size: 12px; text-align: right"
-										v-if="slot.item.address"
-									>
-										{{ slot.item.address }}
-									</el-col>
-								</el-row>
-							</template>
-						</vue3-simple-typeahead>
-						<el-icon style="position: absolute; right: 50%; top: 10px"
-							><search
-						/></el-icon>
-						<el-button link type="primary" @click="changeToNew">New customer</el-button>
-					</el-form-item>
+									<el-row>
+										<el-col
+											:span="12"
+											style="float: right; font-size: 12px"
+											v-if="slot.item.emailAddress"
+										>
+											{{ slot.item.emailAddress }}
+										</el-col>
+										<el-col
+											:span="12"
+											style="float: right; font-size: 12px; text-align: right"
+											v-if="slot.item.address"
+										>
+											{{ slot.item.address }}
+										</el-col>
+									</el-row>
+								</template>
+							</vue3-simple-typeahead>
+							<el-icon style="position: absolute; right: 50%; top: 10px"
+								><search
+							/></el-icon>
+							<el-button link type="primary" @click="changeToNew"
+								>New customer</el-button
+							>
+						</el-form-item>
+					</div>
 					<el-form
 						:rules="rulesCustomer"
 						ref="ruleFormCustomerRef"
@@ -341,6 +354,10 @@ let formCustomer: CustomerProfileEntity = reactive({
 	address: "",
 	licence: ""
 });
+let formReg = reactive({
+	state: "NSW",
+	registrationNumber: "BEW76P"
+});
 
 if (isEdit) {
 	form = reactive({
@@ -370,12 +387,12 @@ if (isEdit) {
 		address: params?.item?.address,
 		licence: params?.item?.licence
 	});
-}
 
-const formReg = reactive({
-	state: "NSW",
-	registrationNumber: "BEW76P"
-});
+	formReg = reactive({
+		state: params?.item?.state,
+		registrationNumber: params?.item?.registrationNumber
+	});
+}
 
 function selectCustomer(item: CustomerProfileEntity) {
 	const { id, firstName, surname, emailAddress, phoneNumber, address, licence } = item;
@@ -467,6 +484,8 @@ const submitForm = async (
 						const car = await service.car.base.add({
 							...form,
 							customerID,
+							registrationNumber: formReg.registrationNumber,
+							state: formReg.state,
 							departmentId
 						});
 
@@ -524,7 +543,7 @@ const submitForm = async (
 function getUser(keyword: string) {
 	return service.customer.profile.page({
 		size: 10,
-		keyword: keyword
+		keyWord: keyword
 	});
 }
 

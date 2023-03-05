@@ -32,8 +32,9 @@
 	--el-dialog-border-radius: 10px !important;
 }
 .el-form--default.el-form--label-top .el-form-item .el-form-item__label {
-	line-height: 6px!important;
+	line-height: 13px!important;
+	word-break: keep-all!important;
 }
 .el-table .cell{
-	word-break: keep-all;
+	word-break: keep-all!important;
 }

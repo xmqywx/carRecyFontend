@@ -1,10 +1,10 @@
 <template>
 	<div class="count-sales">
 		<div class="card">
-			<div class="card__header">
-				<span class="label">Total volume</span>
-				<span class="value">$15920</span>
-			</div>
+<!--			<div class="card__header">-->
+<!--				<span class="label">Total volume</span>-->
+<!--				<span class="value">$15920</span>-->
+<!--			</div>-->
 
 			<div class="card__container">
 				<ul class="count-sales__cop">

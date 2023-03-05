@@ -25,28 +25,18 @@
 			<ul class="sales-rank__list">
 				<li>
 					<span>1</span>
-					<span>Wetherill Park</span>
-					<span>123</span>
+					<span>Milperra</span>
+					<span>8</span>
 				</li>
 				<li>
 					<span>2</span>
-					<span>Lizard Log, Western Sydney Parklands</span>
-					<span>30</span>
+					<span>Liverpool</span>
+					<span>0</span>
 				</li>
 				<li>
 					<span>3</span>
-					<span>Prairiewood Leisure Centre</span>
-					<span>20</span>
-				</li>
-				<li>
-					<span>4</span>
-					<span>Fairfield West</span>
-					<span>3</span>
-				</li>
-				<li>
-					<span>5</span>
-					<span>Prairiewood west</span>
-					<span>1</span>
+					<span>Richmond</span>
+					<span>0</span>
 				</li>
 			</ul>
 		</div>

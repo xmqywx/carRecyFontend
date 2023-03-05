@@ -39,7 +39,7 @@
 		<div class="app-topbar__user" v-if="user.info">
 			<el-dropdown trigger="click" hide-on-click @command="onCommand">
 				<span class="el-dropdown-link">
-					<span class="name">{{ user.info.nickName }}</span>
+					<span class="name">{{ user.info.username }}</span>
 					<img class="avatar" :src="user.info.headImg" />
 				</span>
 
@@ -72,14 +72,24 @@ const { router, service } = useCool();
 const { user, app } = useBase();
 const departmentList = ref<BaseSysDepartmentEntity[]>([]);
 const userInfo = storage.get("userInfo");
-const departmentDefault = storage.get("departmentID");
-const isAdmin = userInfo.roleLabel === "admin";
+
+let departmentDefault = storage.get("departmentID");
+const isAdmin = ref(userInfo?.roleLabel === "admin");
 const departmentID: any = ref();
-const departmentName = userInfo.departmentName;
-if (!departmentDefault) {
+const departmentName = ref(userInfo ? userInfo.departmentName : "");
+if (!departmentDefault && userInfo) {
 	storage.set("departmentID", Number(userInfo.departmentId));
 }
-
+if (!userInfo) {
+	service.base.comm.person().then((res) => {
+		isAdmin.value = res.roleLabel === "admin";
+		departmentName.value = res.departmentName;
+		storage.set("departmentID", Number(res.departmentId));
+		if (isAdmin.value) {
+			getDepartments();
+		}
+	});
+}
 async function getDepartments() {
 	service.base.sys.department.list().then((res) => {
 		departmentList.value = res.filter((e) => e.id != 1);

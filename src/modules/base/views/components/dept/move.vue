@@ -58,10 +58,13 @@ async function open(ids: any[]) {
 							})
 							.catch((err) => {
 								ElMessage.error(err.message);
+								close();
 								done();
 							});
 					})
-					.catch(() => null);
+					.catch(() => {
+						close();
+					});
 			}
 		}
 	});

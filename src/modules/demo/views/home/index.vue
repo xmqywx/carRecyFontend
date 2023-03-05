@@ -1,21 +1,26 @@
 <template>
 	<div class="view-home">
 		<el-row :gutter="15">
+<!--			<el-col :lg="6" :md="12" :xs="24">-->
+<!--				<div class="card">-->
+<!--					<count-sales />-->
+<!--				</div>-->
+<!--			</el-col>-->
 			<el-col :lg="6" :md="12" :xs="24">
 				<div class="card">
-					<count-sales />
+					<count-views :status="0" />
 				</div>
 			</el-col>
 			<el-col :lg="6" :md="12" :xs="24">
 				<div class="card">
-					<count-views />
+					<count-views :status="1" />
 				</div>
 			</el-col>
-			<el-col :lg="6" :md="12" :xs="24">
-				<div class="card">
-					<count-paid />
-				</div>
-			</el-col>
+<!--			<el-col :lg="6" :md="12" :xs="24">-->
+<!--				<div class="card">-->
+<!--					<count-paid />-->
+<!--				</div>-->
+<!--			</el-col>-->
 			<el-col :lg="6" :md="12" :xs="24">
 				<div class="card">
 					<count-effect />
@@ -36,18 +41,18 @@
 			</el-col>
 		</el-row>
 
-		<el-row :gutter="15">
-			<el-col :lg="14" :sm="24">
-				<div class="card card--last">
-					<hot-search />
-				</div>
-			</el-col>
-			<el-col :lg="10" :sm="24">
-				<div class="card card--last">
-					<category-ratio />
-				</div>
-			</el-col>
-		</el-row>
+<!--		<el-row :gutter="15">-->
+<!--			<el-col :lg="14" :sm="24">-->
+<!--				<div class="card card&#45;&#45;last">-->
+<!--					<hot-search />-->
+<!--				</div>-->
+<!--			</el-col>-->
+<!--			<el-col :lg="10" :sm="24">-->
+<!--				<div class="card card&#45;&#45;last">-->
+<!--					<category-ratio />-->
+<!--				</div>-->
+<!--			</el-col>-->
+<!--		</el-row>-->
 	</div>
 </template>
 

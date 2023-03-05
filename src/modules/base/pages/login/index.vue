@@ -81,8 +81,10 @@ async function toLogin() {
 
 		// 跳转
 		router.push("/");
+		saving.value = false;
 	} catch (err: any) {
-		refs.value.captcha.refresh();
+		// refs.value.captcha.refresh();
+		saving.value = false;
 		ElMessage.error(err.message);
 	}
 

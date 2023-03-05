@@ -1,8 +1,8 @@
 <template>
 	<div class="cl-view-group">
-		<div class="cl-view-group__wrap">
+		<div class="cl-view-group__wrap" >
 			<!-- 组 -->
-			<div class="cl-view-group__left" :class="[isExpand ? '_expand' : '_collapse']">
+			<div class="cl-view-group__left" v-if="userInfo.roleLabel === 'admin'" :class="[isExpand ? '_expand' : '_collapse']">
 				<slot name="left"></slot>
 			</div>
 
@@ -29,7 +29,7 @@
 import { defineComponent, provide, ref, watch } from "vue";
 import { ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
 import { useStore } from "../../store";
-
+import { storage } from "/@/cool";
 export default defineComponent({
 	name: "cl-view-group",
 
@@ -44,6 +44,7 @@ export default defineComponent({
 
 	setup() {
 		const { app } = useStore();
+		const userInfo = storage.get("userInfo");
 
 		// 是否展开
 		const isExpand = ref(true);
@@ -78,6 +79,7 @@ export default defineComponent({
 		return {
 			isExpand,
 			toExpand,
+			userInfo,
 			checkExpand
 		};
 	}

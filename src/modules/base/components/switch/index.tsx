@@ -58,7 +58,7 @@ export default defineComponent({
 
 				if (req) {
 					req.then(() => {
-						ElMessage.success("更新成功");
+						ElMessage.success("Updated");
 						emit("update:modelValue", val);
 						emit("change", val);
 					}).catch((err: any) => {

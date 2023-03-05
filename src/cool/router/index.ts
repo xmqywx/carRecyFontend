@@ -99,7 +99,7 @@ router.onError((err: any) => {
 	if (!lock) {
 		lock = true;
 
-		ElMessage.error("页面不存在或者未配置！");
+		ElMessage.error("The page does not exist or is not configured!");
 		console.error(err);
 
 		setTimeout(() => {

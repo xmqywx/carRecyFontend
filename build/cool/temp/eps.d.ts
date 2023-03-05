@@ -346,6 +346,14 @@ declare namespace Eps {
 		 */
 		series?: string;
 		/**
+		 * registrationNumber
+		 */
+		registrationNumber?: string;
+		/**
+		 * state
+		 */
+		state?: string;
+		/**
 		 * body Style
 		 */
 		bodyStyle?: string;
@@ -2544,7 +2552,15 @@ declare namespace Eps {
 
 	interface OrderInfo {
 		/**
-		 * 停止
+		 * getCountBooking
+		 */
+		getCountBooking(data?: any): Promise<any>;
+		/**
+		 * getCountJob
+		 */
+		getCountJob(data?: any): Promise<any>;
+		/**
+		 * getCarInfo
 		 */
 		getCarInfo(data?: any): Promise<any>;
 		/**
@@ -2579,6 +2595,8 @@ declare namespace Eps {
 		 * 权限标识
 		 */
 		permission: {
+			getCountBooking: string;
+			getCountJob: string;
 			getCarInfo: string;
 			delete: string;
 			update: string;
@@ -2591,6 +2609,8 @@ declare namespace Eps {
 		 * 权限状态
 		 */
 		_permission: {
+			getCountBooking: boolean;
+			getCountJob: boolean;
 			getCarInfo: boolean;
 			delete: boolean;
 			update: boolean;

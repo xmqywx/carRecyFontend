@@ -2,8 +2,8 @@
 	<div class="count-views">
 		<div class="card">
 			<div class="card__header">
-				<span class="label">Count of leads</span>
-				<span class="value">88</span>
+				<span class="label">Count of {{ title }}</span>
+				<span class="value">{{ count.count }}</span>
 			</div>
 
 			<div class="card__container">
@@ -11,17 +11,42 @@
 			</div>
 
 			<div class="card__footer">
-				<span class="label">Day leads</span>
-				<span class="value">1</span>
+				<span class="label">Day {{ title }}s</span>
+				<span class="value">{{ count.countDay }}</span>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import * as echarts from "echarts";
-
+import { storage, useCool } from "/@/cool";
+const { service } = useCool();
+const count: any = ref({
+	count: 0,
+	countDay: 0
+});
+const title: any = ref("leads");
+const params = defineProps({
+	status: {
+		type: Number
+	}
+});
+async function getCount(status: any) {
+	service.order.info
+		.getCountBooking({
+			departmentId: storage.get("departmentID"),
+			status
+		})
+		.then((res: any) => {
+			count.value = res;
+		});
+}
+getCount(params.status);
+if (params.status === 1) {
+	title.value = "order";
+}
 const chartOption = reactive({
 	grid: {
 		left: 0,
@@ -71,18 +96,18 @@ const chartOption = reactive({
 			symbol: "circle",
 			symbolSize: 6,
 			data: [
-				"1200",
-				"1400",
-				"1008",
-				"1411",
-				"1026",
-				"1288",
-				"1300",
-				"800",
-				"1100",
-				"1000",
-				"1118",
-				"1322"
+				"2",
+				"0",
+				"2",
+				"1",
+				"1",
+				"2",
+				"3",
+				"1",
+				"4",
+				"1",
+				"2",
+				"0"
 			],
 			areaStyle: {
 				color: new echarts.graphic.LinearGradient(
